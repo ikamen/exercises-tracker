@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=430, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Exercise Tracker</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== Exercises tracker tab ===== -->
+    <section id="tab-tracker" class="tab-panel is-active" aria-label="Exercises tracker">
+      <div class="tracker-grid">
+
+        <div class="date-column">
+          <div class="date-list" id="date-list" role="listbox" aria-label="Dates"></div>
+          <button id="save-btn" class="btn-save" type="button">SAVE</button>
+        </div>
+
+        <div class="detail-column">
+          <div class="notes-panel">
+            <textarea
+              id="notes-field"
+              class="notes-field"
+              placeholder="Add a note for this day…"
+              aria-label="Notes"
+            ></textarea>
+          </div>
+          <div class="group-buttons" id="tracker-groups">
+            <button class="group-btn" type="button" data-group="arms">ARMS</button>
+            <button class="group-btn" type="button" data-group="legs">LEGS</button>
+            <button class="group-btn" type="button" data-group="chest">CHEST</button>
+            <button class="group-btn" type="button" data-group="core">CORE</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== Exercises tab ===== -->
+    <section id="tab-exercises" class="tab-panel" aria-label="Exercises">
+      <div class="exercises-grid">
+        <div class="exercise-scroller" id="exercise-scroller">
+          <p class="empty-state" id="exercise-empty" hidden>No exercises for this group yet.</p>
+        </div>
+        <div class="group-buttons" id="exercise-groups">
+          <button class="group-btn" type="button" data-group="Arms">ARMS</button>
+          <button class="group-btn" type="button" data-group="Legs">LEGS</button>
+          <button class="group-btn" type="button" data-group="Chest">CHEST</button>
+          <button class="group-btn" type="button" data-group="Core">CORE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Error banner ===== -->
+    <div id="error-banner" class="error-banner" hidden>
+      There is a problem connecting to the data source
+    </div>
+
+    <!-- ===== Unsaved-changes dialog ===== -->
+    <div id="confirm-overlay" class="overlay" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+        <p id="confirm-title" class="dialog-text">Save the data before switching dates</p>
+        <div class="dialog-actions">
+          <button id="confirm-discard" class="btn-secondary" type="button">Discard</button>
+          <button id="confirm-save" class="btn-primary" type="button">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Bottom tab bar ===== -->
+    <nav class="bottom-nav">
+      <button id="nav-tracker" class="nav-btn is-active" type="button">Exercises tracker</button>
+      <button id="nav-exercises" class="nav-btn" type="button">Exercises</button>
+    </nav>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
