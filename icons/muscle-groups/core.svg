@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 480" width="200" height="480" role="img" aria-label="Body outline with the core highlighted">
+  <style>
+    .fill { fill: #1b2230; stroke: #1b2230; stroke-width: 1; }
+    .highlight { fill: #5b63d6; stroke: #5b63d6; stroke-width: 0.6; }
+    .outline { fill: none; stroke: #c3c9d6; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .detail { fill: none; stroke: #c3c9d6; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; }
+  </style>
+  <defs>
+    <!-- Every body part is drawn for the figure's left half (viewer's left) and mirrored. -->
+
+    <!-- Solid silhouette, used as the background fill -->
+    <path id="body-fill" d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 L91 62 L90 76
+      C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180
+      C38 192 37 205 38 218 C39 228 40 236 41 242 C37 250 37 262 39 272 C41 280 46 283 50 278
+      C52 272 53 262 52 252 C52 248 51 245 51 242 C53 228 56 210 57 196 C58 190 58 186 58 182
+      C61 168 63 150 64 134 L66 126 C68 140 69 150 70 160 C71 175 73 190 74 200
+      C74 212 72 222 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358
+      C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462 C70 466 76 468 84 468
+      L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440 C88 425 92 400 92 380
+      C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254 Z" />
+
+    <!-- Arm area: shoulder (deltoid) down to the wrist -->
+    <path id="arm-area" d="M64 89 C55 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180
+      C38 192 37 205 38 218 C39 228 40 236 41 242 L51 242 C53 228 56 210 57 196
+      C58 190 58 186 58 182 C60 168 61 152 61 140 C58 122 59 106 64 89 Z" />
+
+    <!-- Leg area: groin crease down to the ankle -->
+    <path id="leg-area" d="M73.6 214 C73 222 71.5 228 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338
+      C71 346 70 352 69 358 C66 372 66 390 70 410 C73 425 76 438 77 446 L89 440
+      C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254
+      L98 250 C92 240 82 226 73.6 214 Z" />
+
+    <!-- Chest area: collarbone down to the lower edge of the chest -->
+    <path id="chest-area" d="M100 87 L96 86 C88 84 76 88 66 94 L62 97 C60 106 59 116 60 122 L66 124
+      C78 133 90 133 99 126 L100 126 Z" />
+
+    <!-- Core area: below the chest down to the groin crease -->
+    <path id="core-area" d="M100 126 L99 126 C90 133 78 133 66 124 L66 126 C68 140 69 150 70 160
+      C71 175 73 190 74 200 C74 206 73.8 210 73.6 214 C82 226 92 240 98 250 L100 252 Z" />
+
+    <!-- Outer contour: head, neck, shoulder, arm, hand, torso side, leg, foot -->
+    <g id="half-outline">
+      <path d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 C94 66 98 67 100 67" />
+      <path d="M80 34 C76 33 75 40 77 44 C78 47 80 48 81 47" />
+      <path d="M91 62 L90 76 C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136
+        C43 150 42 165 42 180 C38 192 37 205 38 218 C39 228 40 236 41 242
+        C37 250 37 262 39 272 C41 280 46 283 50 278 C52 272 53 262 52 252 C52 248 51 245 51 242
+        C53 228 56 210 57 196 C58 190 58 186 58 182 C61 168 63 150 64 134 L66 126
+        C68 140 69 150 70 160 C71 175 73 190 74 200 C74 212 72 222 70 232
+        C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358
+        C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462
+        C70 466 76 468 84 468 L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440
+        C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254" />
+    </g>
+
+    <!-- Muscle definition lines -->
+    <g id="half-details">
+      <path d="M93 66 C95 72 97 78 98 84" />                         <!-- neck -->
+      <path d="M96 86 C88 84 76 88 66 94" />                         <!-- collarbone -->
+      <path d="M61 140 C58 122 59 106 64 89" />                      <!-- front of the shoulder -->
+      <path d="M99 126 C90 133 78 133 66 124" />                     <!-- lower edge of the chest -->
+      <path d="M58 140 C52 150 50 165 52 178" />                     <!-- biceps -->
+      <path d="M46 184 C50 187 54 187 57 184" />                     <!-- elbow -->
+      <path d="M45 192 C48 205 50 222 48 238" />                     <!-- forearm -->
+      <path d="M51 252 C54 258 54 264 51 268" />                     <!-- thumb -->
+      <path d="M86 134 C83 152 83 176 86 200 C88 214 94 226 100 232" /> <!-- abs, outer edge -->
+      <path d="M100 152 C94 153 89 152 85 150" />                    <!-- abs -->
+      <path d="M100 174 C94 175 89 174 84 172" />
+      <path d="M100 196 C94 197 89 196 85 194" />
+      <path d="M73 150 C77 162 79 176 79 190" />                     <!-- side of the waist -->
+      <path d="M74 214 C82 226 92 240 98 250" />                     <!-- groin crease -->
+      <path d="M76 252 C82 280 84 305 82 330" />                     <!-- thigh -->
+      <path d="M93 298 C88 314 85 328 87 340" />                     <!-- inner thigh -->
+      <path d="M76 340 C78 348 84 352 89 348" />                     <!-- kneecap -->
+      <path d="M75 364 C77 382 79 402 81 424" />                     <!-- shin -->
+    </g>
+  </defs>
+
+  <!-- Base silhouette -->
+  <use class="fill" href="#body-fill" />
+  <use class="fill" href="#body-fill" transform="translate(200 0) scale(-1 1)" />
+
+  <!-- Highlighted area -->
+  <use class="highlight" href="#core-area" />
+  <use class="highlight" href="#core-area" transform="translate(200 0) scale(-1 1)" />
+
+  <!-- Lines -->
+  <use class="outline" href="#half-outline" />
+  <use class="outline" href="#half-outline" transform="translate(200 0) scale(-1 1)" />
+  <use class="detail" href="#half-details" />
+  <use class="detail" href="#half-details" transform="translate(200 0) scale(-1 1)" />
+  <path class="detail" d="M100 100 L100 124 M100 136 L100 230" />
+  <ellipse class="detail" cx="100" cy="206" rx="1.8" ry="2.8" />
+</svg>

@@ -13,26 +13,18 @@
     <section id="tab-tracker" class="tab-panel is-active" aria-label="Exercises tracker">
       <div class="tracker-grid">
 
-        <div class="date-column">
-          <div class="date-list" id="date-list" role="listbox" aria-label="Dates"></div>
-          <button id="save-btn" class="btn-save" type="button">SAVE</button>
-        </div>
+        <!-- One column per date, one row per exercise type; built by app.js -->
+        <div class="tracker-table" id="tracker-table" aria-label="Exercises by date"></div>
 
-        <div class="detail-column">
-          <div class="notes-panel">
-            <textarea
-              id="notes-field"
-              class="notes-field"
-              placeholder="Add a note for this day…"
-              aria-label="Notes"
-            ></textarea>
-          </div>
-          <div class="group-buttons" id="tracker-groups">
-            <button class="group-btn" type="button" data-group="arms">ARMS</button>
-            <button class="group-btn" type="button" data-group="legs">LEGS</button>
-            <button class="group-btn" type="button" data-group="chest">CHEST</button>
-            <button class="group-btn" type="button" data-group="core">CORE</button>
-          </div>
+        <div class="tracker-footer">
+          <input
+            id="notes-field"
+            class="notes-field"
+            type="text"
+            placeholder="Add a note…"
+            aria-label="Notes"
+          />
+          <button id="save-btn" class="btn-save" type="button">Save</button>
         </div>
 
       </div>

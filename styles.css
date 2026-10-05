@@ -53,58 +53,114 @@ html, body {
 /* ===== Tracker tab layout ===== */
 .tracker-grid {
   display: flex;
+  flex-direction: column;
   gap: 12px;
   width: 100%;
   min-height: 0;
 }
 
-.date-column {
-  width: 38%;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-.date-list {
+/* Horizontally scrolling table: each child is a date column */
+.tracker-table {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: #3a4256 transparent;
   background: var(--bg-elevated);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
-  padding: 6px;
+}
+
+.date-col {
+  flex: 0 0 20%; /* 5 dates visible at once */
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.date-item {
-  flex-shrink: 0;
-  padding: 14px 12px;
-  border-radius: var(--radius-md);
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-secondary);
-  font-size: 15px;
-  text-align: left;
+  scroll-snap-align: start;
+  border-right: 1px solid var(--card-border);
   cursor: pointer;
 }
+.date-col:last-child { border-right: none; }
 
-.date-item.is-selected {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--text-primary);
+.date-col.is-selected { background: rgba(255, 255, 255, 0.04); }
+
+.date-head {
+  flex-shrink: 0;
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.25;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--card-border);
+}
+.date-head .month { display: block; font-size: 13px; }
+
+.date-col.is-selected .date-head {
+  background: var(--accent);
+  color: #fff;
   font-weight: 600;
 }
 
-.date-item.is-empty {
+.date-cell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--card-border);
+}
+.date-cell:last-child { border-bottom: none; }
+
+.cell-btn {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell-btn img {
+  height: 100%;
+  max-height: 120px;
+  width: auto;
+  pointer-events: none;
+}
+
+.cell-label { display: none; }
+
+/* In the selected column each cell is a toggle button */
+.date-col.is-selected .date-cell { padding: 6px; }
+
+.date-col.is-selected .cell-btn {
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+}
+
+.date-col.is-selected .date-cell:not(.is-pressed) .cell-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   color: var(--text-secondary);
-  opacity: 0.6;
+}
+
+.date-col.is-selected .date-cell.is-pressed .cell-btn {
+  background: rgba(255, 255, 255, 0.14); /* neutral, so the icon's blue highlight stays visible */
+  border: 2px solid var(--accent);
+}
+
+.tracker-footer {
+  flex-shrink: 0;
+  display: flex;
+  gap: 10px;
 }
 
 .btn-save {
-  margin-top: 10px;
-  padding: 14px;
+  flex-shrink: 0;
+  padding: 0 28px;
   border-radius: var(--radius-pill);
   border: none;
   background: var(--accent);
@@ -116,37 +172,19 @@ html, body {
 }
 .btn-save:active { background: var(--accent-hover); }
 
-.detail-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 0;
-}
-
-.notes-panel {
-  flex: 1;
-  min-height: 0;
-  background: var(--bg-elevated);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 4px;
-  display: flex;
-}
-
 .notes-field {
   flex: 1;
-  width: 100%;
-  resize: none;
-  border: none;
+  min-width: 0;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-pill);
   outline: none;
-  background: transparent;
+  background: var(--bg-elevated);
   color: var(--text-primary);
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.5;
-  padding: 12px;
+  font-size: 16px; /* 16px stops iOS zooming in on focus */
+  padding: 14px 18px;
 }
+.notes-field:focus { border-color: var(--accent); }
 .notes-field::placeholder { color: var(--text-secondary); }
 
 /* ===== Group buttons (shared by both tabs) ===== */
