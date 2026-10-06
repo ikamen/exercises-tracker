@@ -58,6 +58,7 @@
     exerciseScroller: document.getElementById('exercise-scroller'),
     exerciseEmpty: document.getElementById('exercise-empty'),
     errorBanner: document.getElementById('error-banner'),
+    loadingOverlay: document.getElementById('loading-overlay'),
     confirmOverlay: document.getElementById('confirm-overlay'),
     confirmSave: document.getElementById('confirm-save'),
     confirmDiscard: document.getElementById('confirm-discard')
@@ -71,18 +72,31 @@
     errorTimer = setTimeout(function () { el.errorBanner.hidden = true; }, 4000);
   }
 
+  // ---------- loading spinner ----------
+  // Counts requests in flight so overlapping reads/saves keep it visible
+  // until the last one finishes.
+  var pendingRequests = 0;
+  function withSpinner(promise) {
+    pendingRequests++;
+    el.loadingOverlay.hidden = false;
+    return promise.finally(function () {
+      pendingRequests--;
+      if (pendingRequests === 0) el.loadingOverlay.hidden = true;
+    });
+  }
+
   // ---------- API ----------
   function apiRead() {
-    return fetch(CONFIG.APPS_SCRIPT_URL + '?action=read')
+    return withSpinner(fetch(CONFIG.APPS_SCRIPT_URL + '?action=read')
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data.success) throw new Error(data.error || 'read failed');
         return data.rows;
-      });
+      }));
   }
 
   function apiSave(rows) {
-    return fetch(CONFIG.APPS_SCRIPT_URL, {
+    return withSpinner(fetch(CONFIG.APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight to Apps Script
       body: JSON.stringify({ action: 'save', rows: rows })
@@ -91,7 +105,7 @@
       .then(function (data) {
         if (!data.success) throw new Error(data.error || 'save failed');
         return true;
-      });
+      }));
   }
 
   // ---------- tracker tab: rendering ----------
