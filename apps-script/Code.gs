@@ -8,7 +8,7 @@
  *   - Who has access: Anyone
  *
  * The sheet must have a tab named exactly "Exercises tracker" with headers
- * in row 1: Date | Legs | Arms | Chest | Core | Notes (columns A-F).
+ * in row 1: Date | Legs | Arms | Chest | Core | Walk | Notes (columns A-G).
  *
  * The @OnlyCurrentDoc annotation above tells Apps Script to request only the
  * "spreadsheets.currentonly" OAuth scope - access to THIS sheet alone -
@@ -19,6 +19,7 @@
  */
 
 var SHEET_NAME = 'Exercises tracker';
+var NUM_COLUMNS = 7; // Date, Legs, Arms, Chest, Core, Walk, Notes
 
 function doGet(e) {
   var action = e.parameter.action;
@@ -55,7 +56,7 @@ function handleRead() {
     if (lastRow < 2) {
       return jsonResponse({ success: true, rows: [] });
     }
-    var values = sheet.getRange(2, 1, lastRow - 1, 6).getValues();
+    var values = sheet.getRange(2, 1, lastRow - 1, NUM_COLUMNS).getValues();
     var rows = values
       .filter(function (r) { return r[0] !== '' && r[0] !== null; })
       .map(function (r) {
@@ -65,7 +66,8 @@ function handleRead() {
           arms: isChecked(r[2]),
           chest: isChecked(r[3]),
           core: isChecked(r[4]),
-          notes: r[5] ? String(r[5]) : ''
+          walk: isChecked(r[5]),
+          notes: r[6] ? String(r[6]) : ''
         };
       });
     return jsonResponse({ success: true, rows: rows });
@@ -94,11 +96,12 @@ function handleSave(rowsToSave) {
         row.arms ? 'V' : '',
         row.chest ? 'V' : '',
         row.core ? 'V' : '',
+        row.walk ? 'V' : '',
         row.notes || ''
       ];
       var idx = existingDates.indexOf(row.date);
       if (idx >= 0) {
-        sheet.getRange(idx + 2, 1, 1, 6).setValues([rowValues]);
+        sheet.getRange(idx + 2, 1, 1, NUM_COLUMNS).setValues([rowValues]);
       } else {
         sheet.appendRow(rowValues);
         existingDates.push(row.date);

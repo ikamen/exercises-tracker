@@ -2,8 +2,15 @@
   'use strict';
 
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var GROUPS = ['legs', 'arms', 'chest', 'core']; // matches sheet column order B-E
-  var TABLE_ROWS = ['arms', 'chest', 'core', 'legs']; // top-to-bottom row order in the tracker table
+  var GROUPS = ['legs', 'arms', 'chest', 'core', 'walk']; // matches sheet column order B-F
+  var TABLE_ROWS = ['arms', 'chest', 'core', 'legs', 'walk']; // top-to-bottom row order in the tracker table
+
+  // A row with nothing ticked and no notes.
+  function emptyRow(date) {
+    var row = { date: date, notes: '' };
+    GROUPS.forEach(function (group) { row[group] = false; });
+    return row;
+  }
 
   // ---------- date helpers ----------
   function formatDate(d) {
@@ -137,7 +144,9 @@
     var today = todayString();
     var hasToday = rows.some(function (r) { return r.date === today; });
     if (!hasToday) {
-      rows.push({ date: today, legs: false, arms: false, chest: false, core: false, notes: '', _virtual: true });
+      var placeholder = emptyRow(today);
+      placeholder._virtual = true;
+      rows.push(placeholder);
     }
     state.displayRows = rows;
   }
@@ -236,7 +245,7 @@
   }
 
   function selectDate(date) {
-    var row = findRow(date) || { legs: false, arms: false, chest: false, core: false, notes: '' };
+    var row = findRow(date) || emptyRow(date);
     var previousDate = state.selectedDate;
     state.selectedDate = date;
     state.draft = {};
@@ -276,19 +285,15 @@
       var end = addDays(parseDate(targetDate), -1);
       if (start) {
         for (var d = start; d.getTime() <= end.getTime(); d = addDays(d, 1)) {
-          rowsToSave.push({ date: formatDate(d), legs: false, arms: false, chest: false, core: false, notes: '' });
+          rowsToSave.push(emptyRow(formatDate(d)));
         }
       }
     }
 
-    rowsToSave.push({
-      date: targetDate,
-      legs: values.legs,
-      arms: values.arms,
-      chest: values.chest,
-      core: values.core,
-      notes: values.notes
-    });
+    var row = emptyRow(targetDate);
+    GROUPS.forEach(function (group) { row[group] = values[group]; });
+    row.notes = values.notes;
+    rowsToSave.push(row);
 
     return rowsToSave;
   }
