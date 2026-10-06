@@ -37,6 +37,7 @@
     displayRows: [],         // realRows plus a virtual "today" placeholder if not present yet
     selectedDate: null,
     draft: {},               // selected date's exercise values, including unsaved taps
+    savesCompleted: 0,       // lets a slow read tell whether a save finished after it started
     originalSnapshot: null,  // snapshot of selected row's values, for dirty-check
     pendingDate: null,       // date the user tried to switch to while dirty
     exercisesLoaded: false,
@@ -59,6 +60,7 @@
     exerciseEmpty: document.getElementById('exercise-empty'),
     errorBanner: document.getElementById('error-banner'),
     loadingOverlay: document.getElementById('loading-overlay'),
+    syncIndicator: document.getElementById('sync-indicator'),
     confirmOverlay: document.getElementById('confirm-overlay'),
     confirmSave: document.getElementById('confirm-save'),
     confirmDiscard: document.getElementById('confirm-discard')
@@ -87,12 +89,12 @@
 
   // ---------- API ----------
   function apiRead() {
-    return withSpinner(fetch(CONFIG.APPS_SCRIPT_URL + '?action=read')
+    return fetch(CONFIG.APPS_SCRIPT_URL + '?action=read')
       .then(function (r) { return r.json(); })
       .then(function (data) {
         if (!data.success) throw new Error(data.error || 'read failed');
         return data.rows;
-      }));
+      });
   }
 
   function apiSave(rows) {
@@ -106,6 +108,27 @@
         if (!data.success) throw new Error(data.error || 'save failed');
         return true;
       }));
+  }
+
+  // ---------- local copy of the sheet ----------
+  // The last rows read from or saved to the sheet are kept in localStorage
+  // so the table can be shown immediately on the next visit, while the
+  // fresh copy loads from the (slow) Apps Script backend.
+  var CACHE_KEY = 'exerciseTracker.rows';
+
+  function readCache() {
+    try {
+      var json = localStorage.getItem(CACHE_KEY);
+      return json ? JSON.parse(json) : null;
+    } catch (e) {
+      return null; // storage blocked or corrupt: fall back to a normal load
+    }
+  }
+
+  function writeCache(rows) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(rows));
+    } catch (e) { /* storage unavailable; the app still works without it */ }
   }
 
   // ---------- tracker tab: rendering ----------
@@ -291,6 +314,8 @@
     return apiSave(rowsToSave)
       .then(function () {
         mergeIntoRealRows(rowsToSave);
+        writeCache(state.realRows);
+        state.savesCompleted++;
         buildDisplayRows();
         state.originalSnapshot = values;
         renderTable();
@@ -344,19 +369,62 @@
   });
 
   // ---------- initial load of tracker data ----------
+  // Shows the local copy straight away (if there is one), then replaces it
+  // with the sheet's data once that arrives. Only the first-ever load, with
+  // nothing to show yet, blocks the screen with the full spinner.
   function loadTracker() {
-    return apiRead()
+    var cached = readCache();
+    var savesAtStart = state.savesCompleted;
+    var request = apiRead();
+
+    if (cached) {
+      showRows(cached);
+      el.syncIndicator.hidden = false;
+    } else {
+      request = withSpinner(request);
+    }
+
+    return request
       .then(function (rows) {
-        rows.sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
-        state.realRows = rows;
-        buildDisplayRows();
-        var today = todayString();
-        selectDate(today);
-        el.trackerTable.scrollLeft = el.trackerTable.scrollWidth;
+        // A save that finished meanwhile already updated the table and the
+        // local copy; this read may have started before it, so drop it.
+        if (state.savesCompleted !== savesAtStart) return;
+        writeCache(rows);
+        if (cached) {
+          refreshRows(rows);
+        } else {
+          showRows(rows);
+        }
       })
       .catch(function () {
         showError();
+      })
+      .finally(function () {
+        el.syncIndicator.hidden = true;
       });
+  }
+
+  function setRealRows(rows) {
+    rows.sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
+    state.realRows = rows;
+    buildDisplayRows();
+  }
+
+  function showRows(rows) {
+    setRealRows(rows);
+    selectDate(todayString());
+    el.trackerTable.scrollLeft = el.trackerTable.scrollWidth;
+  }
+
+  // Swaps in fresh rows without moving the user: the selected date and
+  // scroll position stay, and unsaved taps or notes are kept.
+  function refreshRows(rows) {
+    var dirty = isDirty();
+    setRealRows(rows);
+    if (!dirty) {
+      selectDate(findRow(state.selectedDate) ? state.selectedDate : todayString());
+    }
+    renderTable();
   }
 
   // ---------- tab switching ----------

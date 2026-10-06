@@ -55,6 +55,11 @@
       <div class="spinner" role="status" aria-label="Loading"></div>
     </div>
 
+    <!-- ===== Smaller spinner while refreshing data that's already shown; doesn't block taps ===== -->
+    <div id="sync-indicator" class="sync-indicator" hidden>
+      <div class="spinner spinner-small" role="status" aria-label="Updating"></div>
+    </div>
+
     <!-- ===== Unsaved-changes dialog ===== -->
     <div id="confirm-overlay" class="overlay" hidden>
       <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirm-title">

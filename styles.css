@@ -295,6 +295,24 @@ html, body {
   animation: spin 0.8s linear infinite;
 }
 
+.sync-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* the table stays usable underneath */
+  z-index: 35;
+}
+
+.spinner-small {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+  background: var(--bg);
+  box-shadow: 0 0 0 6px var(--bg); /* dark backing so it reads over the icons */
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
