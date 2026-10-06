@@ -2,12 +2,12 @@
 
 A mobile-optimised (430×932) two-tab web app: log which muscle groups you
 worked each day (backed by a Google Sheet), and browse reference photos for
-exercises grouped by Arms / Legs / Chest / Core.
+exercises grouped by Arms / Legs / Chest / Core. Walks are tracked too.
 
 ## 1. Deploy the Google Apps Script backend
 
 1. Open your **"Exercises tracker"** Google Sheet (the one with the
-   `Exercises tracker` tab and headers `Date | Legs | Arms | Chest | Core | Notes`
+   `Exercises tracker` tab and headers `Date | Legs | Arms | Chest | Core | Walk | Notes`
    in row 1).
 2. Go to **Extensions > Apps Script**.
 3. Delete any starter code in `Code.gs`, then paste in the contents of

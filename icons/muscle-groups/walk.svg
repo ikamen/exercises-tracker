@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 480" width="200" height="480" role="img" aria-label="Body outline of a person walking, with the legs highlighted">
+  <style>
+    .part { fill: #1b2230; stroke: #c3c9d6; stroke-width: 1.8; stroke-linejoin: round; }
+    .highlight { fill: #5b63d6; }
+    .detail { fill: none; stroke: #c3c9d6; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; }
+  </style>
+
+  <!-- Side view, walking to the right. Parts are drawn back to front so
+       nearer parts overlap the ones behind them. -->
+
+  <!-- Far arm, swinging forward -->
+  <path class="part" d="M124 98 C132 122 140 146 141 168 L121 174 C114 152 104 128 100 106 Z" />
+  <path class="part" d="M134 162 C146 166 154 170 162 174 L158 188 C148 186 136 184 126 180 Z" />
+  <ellipse class="part" cx="168" cy="183" rx="9" ry="8" transform="rotate(25 168 183)" />
+
+  <!-- Back leg, pushing off the toes -->
+  <path class="part" d="M34 428 L48 434 C56 444 64 448 72 452 C74 456 72 460 66 460 L52 460 C44 456 36 446 32 438 Z" />
+  <path class="part highlight" d="M79 337 C72 370 58 405 48 434 L34 430 C34 410 38 385 46 368 C50 352 52 340 53 331 Z" />
+  <path class="part highlight" d="M107 245 C100 280 88 312 79 337 L53 331 C52 300 60 262 69 235 Z" />
+
+  <!-- Front leg, stepping onto the heel -->
+  <path class="part" d="M124 432 L138 432 C150 438 162 440 168 446 C168 452 164 456 156 456 L126 456 C120 456 118 446 124 432 Z" />
+  <path class="part highlight" d="M142 330 C144 360 140 400 138 436 L124 438 C122 410 114 380 117 352 C117 344 118 338 119 336 Z" />
+  <path class="part highlight" d="M119 234 C130 260 140 300 143 330 L119 340 C108 310 92 280 82 248 Z" />
+
+  <!-- Torso -->
+  <path class="part" d="M88 86 C104 80 120 82 128 94 C136 106 139 122 135 138 C130 152 124 166 122 182
+    C121 202 122 222 120 246 C108 256 90 258 78 250 C74 236 76 222 80 206
+    C84 190 82 170 79 150 C76 128 76 104 88 86 Z" />
+
+  <!-- Neck and head -->
+  <path class="part" d="M102 58 L120 58 C119 68 120 76 122 86 L96 86 C100 78 102 68 102 58 Z" />
+  <ellipse class="part" cx="112" cy="38" rx="20" ry="25" />
+  <path class="detail" d="M104 33 C100 33 99 40 101 43 C102 45 104 46 105 45" />  <!-- ear -->
+
+  <!-- Near arm, swinging back -->
+  <path class="part" d="M96 172 C92 192 84 212 77 230 L63 226 C64 206 68 186 74 168 Z" />
+  <path class="part" d="M82 104 C86 88 112 88 116 108 C110 132 100 154 96 174 L74 170 C76 148 78 124 82 104 Z" />
+  <ellipse class="part" cx="69" cy="238" rx="8" ry="10" transform="rotate(14 69 238)" />
+
+  <!-- Muscle definition lines -->
+  <path class="detail" d="M118 126 C126 138 132 140 136 136" />  <!-- chest -->
+  <path class="detail" d="M126 152 C122 172 121 192 122 212" />  <!-- abdomen -->
+  <path class="detail" d="M80 214 C88 226 96 236 104 244" />     <!-- glute -->
+  <path class="detail" d="M80 124 C84 138 86 150 84 162" />      <!-- triceps -->
+  <path class="detail" d="M124 262 C130 284 136 304 138 322" />  <!-- front thigh -->
+  <path class="detail" d="M124 344 C126 352 132 356 140 352" />  <!-- front knee -->
+  <path class="detail" d="M120 360 C122 380 126 400 130 420" />  <!-- front shin -->
+  <path class="detail" d="M98 262 C92 284 86 304 80 322" />      <!-- back thigh -->
+  <path class="detail" d="M48 372 C46 384 44 396 42 408" />      <!-- back calf -->
+</svg>
