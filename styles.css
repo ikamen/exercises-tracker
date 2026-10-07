@@ -38,6 +38,9 @@ html, body {
   position: relative;
   background: var(--bg);
   overflow: hidden;
+  /* Keep content clear of the notch and home bar when opened from the home screen */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ===== Tab panels ===== */
