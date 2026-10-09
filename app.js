@@ -2,7 +2,7 @@
   'use strict';
 
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var GROUPS = ['legs', 'arms', 'chest', 'core', 'walk']; // matches sheet column order B-F
+  var GROUPS = ['legs', 'arms', 'chest', 'core', 'walk']; // columns in the exercise_days table
   var TABLE_ROWS = ['arms', 'chest', 'core', 'legs', 'walk']; // top-to-bottom row order in the tracker table
 
   // A row with nothing ticked and no notes.
@@ -40,7 +40,7 @@
 
   // ---------- app state ----------
   var state = {
-    realRows: [],           // rows as loaded from / saved to the sheet, sorted ascending
+    realRows: [],           // rows as loaded from / saved to the database, sorted ascending
     displayRows: [],         // realRows plus a virtual "today" placeholder if not present yet
     selectedDate: null,
     draft: {},               // selected date's exercise values, including unsaved taps
@@ -70,7 +70,13 @@
     syncIndicator: document.getElementById('sync-indicator'),
     confirmOverlay: document.getElementById('confirm-overlay'),
     confirmSave: document.getElementById('confirm-save'),
-    confirmDiscard: document.getElementById('confirm-discard')
+    confirmDiscard: document.getElementById('confirm-discard'),
+    loginScreen: document.getElementById('login-screen'),
+    loginForm: document.getElementById('login-form'),
+    loginUsername: document.getElementById('login-username'),
+    loginPassword: document.getElementById('login-password'),
+    loginError: document.getElementById('login-error'),
+    loginBtn: document.getElementById('login-btn')
   };
 
   // ---------- error banner ----------
@@ -94,33 +100,100 @@
     });
   }
 
-  // ---------- API ----------
+  // ---------- API (Supabase) ----------
+  // The login session is kept under AUTH_KEY in localStorage, so a returning
+  // visit can tell straight away whether to show the login screen.
+  var AUTH_KEY = 'exerciseTracker.auth';
+  var TABLE = 'exercise_days';
+  var COLUMNS = 'date, ' + GROUPS.join(', ') + ', notes';
+  var PAGE_SIZE = 1000; // the most rows Supabase returns per request
+  var NOT_LOGGED_IN = 'not logged in';
+
+  var db = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_PUBLISHABLE_KEY, {
+    auth: { storageKey: AUTH_KEY }
+  });
+
+  // The database stores dates as "2026-09-17"; the app uses "17-Sep-2026".
+  function fromDbRow(dbRow) {
+    var parts = dbRow.date.split('-');
+    var row = emptyRow(formatDate(new Date(+parts[0], +parts[1] - 1, +parts[2])));
+    GROUPS.forEach(function (group) { row[group] = !!dbRow[group]; });
+    row.notes = dbRow.notes || '';
+    return row;
+  }
+
+  function toDbRow(row, userId) {
+    var d = parseDate(row.date);
+    var dbRow = {
+      user_id: userId,
+      date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'),
+      notes: row.notes || ''
+    };
+    GROUPS.forEach(function (group) { dbRow[group] = !!row[group]; });
+    return dbRow;
+  }
+
+  // Rejects with NOT_LOGGED_IN when there's no session (the login screen is
+  // shown), or with the auth error if the session couldn't be refreshed
+  // (e.g. offline), which shows the usual connection error instead.
+  function currentUserId() {
+    return db.auth.getSession().then(function (res) {
+      if (res.error) throw res.error;
+      if (!res.data.session) throw new Error(NOT_LOGGED_IN);
+      return res.data.session.user.id;
+    });
+  }
+
   function apiRead() {
-    return fetch(CONFIG.APPS_SCRIPT_URL + '?action=read')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data.success) throw new Error(data.error || 'read failed');
-        return data.rows;
+    return currentUserId().then(function () { return readPage(0, []); });
+  }
+
+  function readPage(from, rows) {
+    return db.from(TABLE)
+      .select(COLUMNS)
+      .order('date')
+      .range(from, from + PAGE_SIZE - 1)
+      .then(function (res) {
+        if (res.error) throw res.error;
+        rows = rows.concat(res.data.map(fromDbRow));
+        return res.data.length < PAGE_SIZE ? rows : readPage(from + PAGE_SIZE, rows);
       });
   }
 
   function apiSave(rows) {
-    return withSpinner(fetch(CONFIG.APPS_SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // avoids CORS preflight to Apps Script
-      body: JSON.stringify({ action: 'save', rows: rows })
-    })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data.success) throw new Error(data.error || 'save failed');
+    return withSpinner(currentUserId()
+      .then(function (userId) {
+        return db.from(TABLE).upsert(
+          rows.map(function (row) { return toDbRow(row, userId); }),
+          { onConflict: 'user_id,date' }
+        );
+      })
+      .then(function (res) {
+        if (res.error) throw res.error;
         return true;
       }));
   }
 
-  // ---------- local copy of the sheet ----------
-  // The last rows read from or saved to the sheet are kept in localStorage
+  function handleApiError(err) {
+    if (err && err.message === NOT_LOGGED_IN) {
+      showLogin();
+    } else {
+      showError();
+    }
+  }
+
+  function hasSavedSession() {
+    try {
+      return !!localStorage.getItem(AUTH_KEY);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // ---------- local copy of the data ----------
+  // The last rows read from or saved to the database are kept in localStorage
   // so the table can be shown immediately on the next visit, while the
-  // fresh copy loads from the (slow) Apps Script backend.
+  // fresh copy loads from Supabase.
   var CACHE_KEY = 'exerciseTracker.rows';
 
   function readCache() {
@@ -136,6 +209,12 @@
     try {
       localStorage.setItem(CACHE_KEY, JSON.stringify(rows));
     } catch (e) { /* storage unavailable; the app still works without it */ }
+  }
+
+  function clearCache() {
+    try {
+      localStorage.removeItem(CACHE_KEY);
+    } catch (e) { /* storage unavailable; nothing to clear */ }
   }
 
   // ---------- tracker tab: rendering ----------
@@ -326,8 +405,8 @@
         renderTable();
         return true;
       })
-      .catch(function () {
-        showError();
+      .catch(function (err) {
+        handleApiError(err);
         return false;
       })
       .finally(function () {
@@ -375,9 +454,13 @@
 
   // ---------- initial load of tracker data ----------
   // Shows the local copy straight away (if there is one), then replaces it
-  // with the sheet's data once that arrives. Only the first-ever load, with
+  // with the database's data once that arrives. Only the first-ever load, with
   // nothing to show yet, blocks the screen with the full spinner.
   function loadTracker() {
+    if (!hasSavedSession()) {
+      showLogin();
+      return Promise.resolve();
+    }
     var cached = readCache();
     var savesAtStart = state.savesCompleted;
     var request = apiRead();
@@ -401,8 +484,8 @@
           showRows(rows);
         }
       })
-      .catch(function () {
-        showError();
+      .catch(function (err) {
+        handleApiError(err);
       })
       .finally(function () {
         el.syncIndicator.hidden = true;
@@ -526,6 +609,65 @@
     state.currentExerciseGroup = btn.dataset.group;
     setActiveExerciseGroupButton(state.currentExerciseGroup);
     renderExerciseGroup(state.currentExerciseGroup);
+  });
+
+  // ---------- login ----------
+  // Username + password for the one account created in the Supabase
+  // dashboard; there's no sign-up. The session is remembered on the device.
+  function showLogin() {
+    el.loginPassword.value = '';
+    el.loginError.hidden = true;
+    el.loginScreen.hidden = false;
+  }
+
+  function showLoginError(message) {
+    el.loginError.textContent = message;
+    el.loginError.hidden = false;
+  }
+
+  el.loginForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    var username = el.loginUsername.value.trim().toLowerCase();
+    var password = el.loginPassword.value;
+    if (!username || !password) {
+      showLoginError('Enter your username and password.');
+      return;
+    }
+
+    el.loginBtn.disabled = true;
+    el.loginBtn.textContent = 'Logging in…';
+    el.loginError.hidden = true;
+    db.auth.signInWithPassword({ email: username + '@' + CONFIG.USERNAME_EMAIL_DOMAIN, password: password })
+      .then(function (res) {
+        var error = res.error;
+        if (!error) {
+          el.loginScreen.hidden = true;
+          el.loginPassword.value = '';
+          loadTracker();
+        } else if (error.status === 400 || error.code === 'invalid_credentials') {
+          showLoginError("That username and password don't match.");
+        } else if (error.name === 'AuthRetryableFetchError') {
+          showLoginError("Can't reach the server. Check your connection and try again.");
+        } else {
+          showLoginError(error.message);
+        }
+      })
+      .finally(function () {
+        el.loginBtn.disabled = false;
+        el.loginBtn.textContent = 'Log in';
+      });
+  });
+
+  el.loginUsername.addEventListener('input', function () { el.loginError.hidden = true; });
+  el.loginPassword.addEventListener('input', function () { el.loginError.hidden = true; });
+
+  // If the saved session stops being valid (e.g. the user is deleted in the
+  // dashboard), forget the local copy of the data and ask for the login again.
+  db.auth.onAuthStateChange(function (event) {
+    if (event === 'SIGNED_OUT') {
+      clearCache();
+      showLogin();
+    }
   });
 
   // ---------- boot ----------

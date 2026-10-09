@@ -1,0 +1,2 @@
+# One-off database setup that includes your exercise log (see supabase/setup.sql)
+supabase/setup.sql
