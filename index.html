@@ -58,7 +58,7 @@
       There is a problem connecting to the data source
     </div>
 
-    <!-- ===== Loading spinner (shown while reading/saving the sheet) ===== -->
+    <!-- ===== Loading spinner (shown while reading/saving the data) ===== -->
     <div id="loading-overlay" class="loading-overlay" hidden>
       <div class="spinner" role="status" aria-label="Loading"></div>
     </div>
@@ -85,8 +85,29 @@
       <button id="nav-exercises" class="nav-btn" type="button">Exercises</button>
     </nav>
 
+    <!-- ===== Login (shown when there's no saved session) ===== -->
+    <section id="login-screen" class="login-screen" aria-label="Log in" hidden>
+      <form id="login-form" class="login-form" novalidate>
+        <h1 class="login-title">Log in</h1>
+        <label class="login-label">
+          <span>Username</span>
+          <input id="login-username" class="login-field" autocomplete="username"
+                 autocapitalize="none" autocorrect="off" spellcheck="false" />
+        </label>
+        <label class="login-label">
+          <span>Password</span>
+          <input id="login-password" class="login-field" type="password" autocomplete="current-password" />
+        </label>
+        <p id="login-error" class="login-error" role="alert" hidden></p>
+        <button id="login-btn" class="btn-login" type="submit">Log in</button>
+      </form>
+    </section>
+
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"
+          integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok"
+          crossorigin="anonymous"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
 </body>

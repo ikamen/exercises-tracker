@@ -1,60 +1,45 @@
 # Exercise Tracker
 
 A mobile-optimised (430×932) two-tab web app: log which muscle groups you
-worked each day (backed by a Google Sheet), and browse reference photos for
+worked each day (stored in Supabase), and browse reference photos for
 exercises grouped by Arms / Legs / Chest / Core. Walks are tracked too.
 
-## 1. Deploy the Google Apps Script backend
+## 1. Set up the Supabase database
 
-1. Open your **"Exercises tracker"** Google Sheet (the one with the
-   `Exercises tracker` tab and headers `Date | Legs | Arms | Chest | Core | Walk | Notes`
-   in row 1).
-2. Go to **Extensions > Apps Script**.
-3. Delete any starter code in `Code.gs`, then paste in the contents of
-   [`apps-script/Code.gs`](apps-script/Code.gs) from this project.
-4. Click **Deploy > New deployment**.
-5. Click the gear icon next to "Select type" and choose **Web app**.
-6. Set:
-   - **Execute as:** Me
-   - **Who has access:** Anyone
-7. Click **Deploy**, and authorise the script when prompted (it needs
-   permission to read/write this one sheet).
-8. Copy the **Web app URL** you're given — it looks like
-   `https://script.google.com/macros/s/AKfycb.../exec`.
+1. Create a project at [supabase.com](https://supabase.com) (or use an
+   existing one).
+2. Create your login: **Authentication > Users > Add user > Create new user**.
+   Use the email `<username>@exercises-tracker.kpmv.co.uk` (you log in to the
+   app with just the `<username>` part), pick a password, and tick
+   **Auto Confirm User**. No mail is ever sent to that address. There is no
+   sign-up in the app, so this is the only account.
+3. Optionally turn off **Authentication > Sign In / Providers > Allow new users
+   to sign up**, so nobody can create another account with the public key.
+4. Open **SQL Editor > New query**, paste in
+   [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. This creates
+   the `exercise_days` table with rules that only let the logged-in user read
+   and write their own days. It is safe to re-run.
 
-> If you edit `Code.gs` later, you'll need to create a **new deployment
-> version** (Deploy > Manage deployments > Edit > New version) for the
-> changes to go live — updating the code alone isn't enough.
+   For the one-off move from the Google Sheet, run `supabase/setup.sql`
+   instead: it does the same as `schema.sql` and also copies in the days from
+   the sheet for the user created in step 2. That file is not in git because
+   it holds your exercise log.
 
-### About the permissions prompt
+## 2. Point the site at your project
 
-`Code.gs` includes a `@OnlyCurrentDoc` annotation at the top. This narrows
-the permission Google asks for from *"See, edit, create, and delete all your
-Google Sheets spreadsheets"* down to just this one sheet. When you authorise
-the script, you should see the narrower wording. If you still see the broad
-"all your spreadsheets" prompt:
-
-1. In the Apps Script editor, click **Project Settings** (gear icon) and
-   check **"Show `appsscript.json` manifest file in editor"**.
-2. Open `appsscript.json` and confirm it contains:
-   ```json
-   "oauthScopes": ["https://www.googleapis.com/auth/spreadsheets.currentonly"]
-   ```
-   Add this field if it's missing, then save.
-3. If you'd already authorised the broad scope once before adding this, go to
-   [myaccount.google.com/permissions](https://myaccount.google.com/permissions),
-   remove the existing authorisation for this script, then deploy and
-   authorise again so it re-prompts with the narrower scope.
-
-## 2. Point the site at your script
-
-Open [`config.js`](config.js) and paste your Web app URL in:
+Open [`config.js`](config.js) and fill in the project URL (**Project Settings
+> Data API**) and publishable key (**Project Settings > API Keys**):
 
 ```js
 const CONFIG = {
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycb.../exec"
+  SUPABASE_URL: "https://abcdefghijklmnop.supabase.co",
+  SUPABASE_PUBLISHABLE_KEY: "sb_publishable_...",
+  USERNAME_EMAIL_DOMAIN: "exercises-tracker.kpmv.co.uk"
 };
 ```
+
+The publishable key is meant to be public; the table rules decide what can be
+read and written.
 
 ## 3. Add your exercise images (optional for now)
 
@@ -89,9 +74,9 @@ To add your own:
 ```
 index.html                    Page markup (both tabs)
 styles.css                    Dark theme styling
-config.js                     Apps Script URL (edit this)
+config.js                     Supabase URL and publishable key (edit this)
 app.js                        All front-end logic
-apps-script/Code.gs           Paste into Google Apps Script (see step 1)
+supabase/schema.sql           Run in the Supabase SQL Editor (see step 1)
 exercises/manifest.json       List of exercise image filenames (regenerate after adding images)
 exercises/images/             Put your exercise photos here
 tools/generate-manifest.js    Run after adding/renaming images: node tools/generate-manifest.js
@@ -99,11 +84,14 @@ tools/generate-manifest.js    Run after adding/renaming images: node tools/gener
 
 ## How the data flows
 
-- **Reading:** on load, the site calls the Apps Script URL with
-  `?action=read`, which returns every row from the sheet as JSON.
-- **Writing:** pressing **Save** sends a `POST` with the row(s) to write —
-  usually just the selected date, but if there's a gap between the last
-  saved date and the one you're saving, blank rows are included for every
-  day in between so the sheet stays continuous.
+- **Login:** the first visit shows a login screen. The session is remembered
+  on the device, so you stay logged in after that.
+- **Reading:** on load, the site reads every row of `exercise_days` for the
+  logged-in user. The last copy is kept on the device so the table shows
+  instantly while the fresh copy loads.
+- **Writing:** pressing **Save** upserts the row(s) to write — usually just
+  the selected date, but if there is a gap between the last saved date and the
+  one you are saving, blank rows are included for every day in between so the
+  list of dates stays continuous.
 - **Errors:** any failure to read or write shows *"There is a problem
   connecting to the data source"* at the bottom of the screen.
