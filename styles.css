@@ -229,6 +229,8 @@ html, body {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #3a4256 transparent;
   background: var(--bg-elevated);
   border: 1px solid var(--card-border);
   border-radius: var(--radius-lg);
