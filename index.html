@@ -9,6 +9,11 @@
 <meta name="apple-mobile-web-app-title" content="Exercises" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="theme-color" content="#10151f" />
+<!-- Open the connections the page is about to need while the HTML is still being
+     parsed: the CDN that serves supabase-js and the Supabase project itself
+     (keep this host the same as SUPABASE_URL in config.js). -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preconnect" href="https://zloodycdfycbfzvhgpze.supabase.co" crossorigin />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" type="image/svg+xml" href="icons/app-icon.svg" />
 <link rel="apple-touch-icon" href="icons/app-icon-180.png" />

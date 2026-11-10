@@ -323,14 +323,21 @@
     return GROUPS.some(function (g) { return current[g] !== snap[g]; });
   }
 
-  function selectDate(date) {
+  // Makes the given date the selected one: fills the draft and notes field
+  // from its row and takes the snapshot the dirty-check compares against.
+  // Doesn't touch the table; selectDate does that.
+  function setSelection(date) {
     var row = findRow(date) || emptyRow(date);
-    var previousDate = state.selectedDate;
     state.selectedDate = date;
     state.draft = {};
     GROUPS.forEach(function (group) { state.draft[group] = !!row[group]; });
     el.notesField.value = row.notes || '';
     state.originalSnapshot = readDetailPanel();
+  }
+
+  function selectDate(date) {
+    var previousDate = state.selectedDate;
+    setSelection(date);
     if (el.trackerTable.querySelector('.date-col[data-date="' + date + '"]')) {
       renderColumns([previousDate, date]);
     } else {
@@ -477,11 +484,15 @@
         // A save that finished meanwhile already updated the table and the
         // local copy; this read may have started before it, so drop it.
         if (state.savesCompleted !== savesAtStart) return;
-        writeCache(rows);
-        if (cached) {
-          refreshRows(rows);
-        } else {
+        sortRows(rows);
+        if (!cached) {
+          writeCache(rows);
           showRows(rows);
+        } else if (!sameRows(cached, rows)) {
+          // Usually the database says the same as the local copy, and the
+          // table already shows it; only rebuild when something differs.
+          writeCache(rows);
+          refreshRows(rows);
         }
       })
       .catch(function (err) {
@@ -492,9 +503,24 @@
       });
   }
 
-  function setRealRows(rows) {
+  function sortRows(rows) {
     rows.sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
-    state.realRows = rows;
+    return rows;
+  }
+
+  // True when two sorted lists of rows hold the same dates with the same
+  // values, i.e. the table built from one would look the same built from the other.
+  function sameRows(a, b) {
+    if (a.length !== b.length) return false;
+    return a.every(function (row, i) {
+      var other = b[i];
+      if (row.date !== other.date || (row.notes || '') !== (other.notes || '')) return false;
+      return GROUPS.every(function (group) { return !!row[group] === !!other[group]; });
+    });
+  }
+
+  function setRealRows(rows) {
+    state.realRows = sortRows(rows);
     buildDisplayRows();
   }
 
@@ -505,14 +531,16 @@
   }
 
   // Swaps in fresh rows without moving the user: the selected date and
-  // scroll position stay, and unsaved taps or notes are kept.
+  // scroll position stay, and unsaved taps or notes are kept. The table is
+  // rebuilt once, after the selection is settled.
   function refreshRows(rows) {
     var dirty = isDirty();
     setRealRows(rows);
     if (!dirty) {
-      selectDate(findRow(state.selectedDate) ? state.selectedDate : todayString());
+      setSelection(findRow(state.selectedDate) ? state.selectedDate : todayString());
     }
     renderTable();
+    if (!dirty) scrollSelectedIntoView();
   }
 
   // ---------- tab switching ----------
