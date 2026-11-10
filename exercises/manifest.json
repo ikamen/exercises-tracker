@@ -1,18 +1,87 @@
 [
-  "Chest - Butterfly.jpg",
-  "Chest - Pushup 2.png",
-  "Chest - Pushup.png",
-  "Chest - Row.jpg",
-  "Core - Bridge with belt.jpg",
-  "Core - Bridge.jpg",
-  "Core - Cat to cow.jpg",
-  "Core - Cockroach.jpeg",
-  "Core - Frog bridge.jpg",
-  "Core - Side stretch.jpg",
-  "Core - Sitting stretch.jpg",
-  "Core - Thread the needle.jpg",
-  "Legs - Deadlift.jpg",
-  "Legs - Forward and reverse lunge.jpg",
-  "Legs - Quads.jpg",
-  "Legs - Squats.jpg"
+  {
+    "file": "Arms - Triceps.webp",
+    "width": 462,
+    "height": 392
+  },
+  {
+    "file": "Chest - Butterfly.webp",
+    "width": 860,
+    "height": 960
+  },
+  {
+    "file": "Chest - Pushup 2.webp",
+    "width": 600,
+    "height": 664
+  },
+  {
+    "file": "Chest - Pushup.webp",
+    "width": 565,
+    "height": 697
+  },
+  {
+    "file": "Chest - Row.webp",
+    "width": 860,
+    "height": 930
+  },
+  {
+    "file": "Core - Bridge with belt.webp",
+    "width": 825,
+    "height": 422
+  },
+  {
+    "file": "Core - Bridge.webp",
+    "width": 860,
+    "height": 476
+  },
+  {
+    "file": "Core - Cat to cow.webp",
+    "width": 444,
+    "height": 366
+  },
+  {
+    "file": "Core - Cockroach.webp",
+    "width": 860,
+    "height": 613
+  },
+  {
+    "file": "Core - Frog bridge.webp",
+    "width": 860,
+    "height": 392
+  },
+  {
+    "file": "Core - Side stretch.webp",
+    "width": 860,
+    "height": 636
+  },
+  {
+    "file": "Core - Sitting stretch.webp",
+    "width": 760,
+    "height": 736
+  },
+  {
+    "file": "Core - Thread the needle.webp",
+    "width": 447,
+    "height": 328
+  },
+  {
+    "file": "Legs - Deadlift.webp",
+    "width": 848,
+    "height": 1216
+  },
+  {
+    "file": "Legs - Forward and reverse lunge.webp",
+    "width": 380,
+    "height": 551
+  },
+  {
+    "file": "Legs - Quads.webp",
+    "width": 671,
+    "height": 653
+  },
+  {
+    "file": "Legs - Squats.webp",
+    "width": 430,
+    "height": 604
+  }
 ]

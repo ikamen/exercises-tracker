@@ -38,6 +38,13 @@
     return formatDate(new Date());
   }
 
+  // "17-Sep-2026" -> "2026-09-17": the database's format, and one that sorts
+  // correctly as plain text.
+  function toIsoDate(str) {
+    var parts = str.split('-');
+    return parts[2] + '-' + String(MONTHS.indexOf(parts[1]) + 1).padStart(2, '0') + '-' + parts[0];
+  }
+
   // ---------- app state ----------
   var state = {
     realRows: [],           // rows as loaded from / saved to the database, sorted ascending
@@ -48,9 +55,8 @@
     originalSnapshot: null,  // snapshot of selected row's values, for dirty-check
     pendingDate: null,       // date the user tried to switch to while dirty
     exercisesLoaded: false,
-    exercisesFirstOpen: true,
     currentExerciseGroup: 'Arms',
-    manifest: []
+    exercises: []            // every image in the manifest, parsed once: { file, width, height, group, label }
   };
 
   // ---------- DOM refs ----------
@@ -123,10 +129,9 @@
   }
 
   function toDbRow(row, userId) {
-    var d = parseDate(row.date);
     var dbRow = {
       user_id: userId,
-      date: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'),
+      date: toIsoDate(row.date),
       notes: row.notes || ''
     };
     GROUPS.forEach(function (group) { dbRow[group] = !!row[group]; });
@@ -339,7 +344,7 @@
     var previousDate = state.selectedDate;
     setSelection(date);
     if (el.trackerTable.querySelector('.date-col[data-date="' + date + '"]')) {
-      renderColumns([previousDate, date]);
+      renderColumns(previousDate ? [previousDate, date] : [date]);
     } else {
       renderTable();
     }
@@ -393,7 +398,7 @@
         state.realRows.push(row);
       }
     });
-    state.realRows.sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
+    sortRows(state.realRows);
   }
 
   // Resolves to true on success, false on failure (never rejects) so callers
@@ -503,8 +508,12 @@
       });
   }
 
+  // Sorts in place by date, ascending. Each date is converted once rather
+  // than at every comparison.
   function sortRows(rows) {
-    rows.sort(function (a, b) { return parseDate(a.date) - parseDate(b.date); });
+    var keyed = rows.map(function (row) { return { key: toIsoDate(row.date), row: row }; });
+    keyed.sort(function (a, b) { return a.key < b.key ? -1 : a.key > b.key ? 1 : 0; });
+    keyed.forEach(function (item, i) { rows[i] = item.row; });
     return rows;
   }
 
@@ -562,16 +571,17 @@
   el.navExercises.addEventListener('click', function () { showTab('exercises'); });
 
   // ---------- exercises tab ----------
+  // The manifest lists every image as { file, width, height } (see
+  // tools/generate-manifest.js); the group and label come from the file name.
   function loadExercises() {
     fetch('exercises/manifest.json')
       .then(function (r) { return r.json(); })
-      .then(function (files) {
-        state.manifest = files;
+      .then(function (entries) {
+        state.exercises = entries.map(function (entry) {
+          var parsed = parseFilename(entry.file);
+          return { file: entry.file, width: entry.width, height: entry.height, group: parsed.group, label: parsed.label };
+        });
         state.exercisesLoaded = true;
-        if (state.exercisesFirstOpen) {
-          state.currentExerciseGroup = 'Arms';
-          state.exercisesFirstOpen = false;
-        }
         setActiveExerciseGroupButton(state.currentExerciseGroup);
         renderExerciseGroup(state.currentExerciseGroup);
       })
@@ -581,7 +591,7 @@
   }
 
   function parseFilename(filename) {
-    // "Arms - Biceps.jpg" -> { group: "Arms", label: "Biceps" }
+    // "Arms - Biceps.webp" -> { group: "Arms", label: "Biceps" }
     var withoutExt = filename.replace(/\.[^.]+$/, '');
     var sepIndex = withoutExt.indexOf(' - ');
     if (sepIndex === -1) return { group: null, label: withoutExt };
@@ -592,14 +602,9 @@
   }
 
   function renderExerciseGroup(group) {
-    var items = state.manifest
-      .map(function (filename) {
-        var parsed = parseFilename(filename);
-        return { filename: filename, group: parsed.group, label: parsed.label };
-      })
-      .filter(function (item) {
-        return item.group && item.group.toLowerCase() === group.toLowerCase();
-      });
+    var items = state.exercises.filter(function (item) {
+      return item.group && item.group.toLowerCase() === group.toLowerCase();
+    });
 
     el.exerciseScroller.innerHTML = '';
 
@@ -615,9 +620,17 @@
       nameEl.className = 'exercise-name';
       nameEl.textContent = item.label;
 
+      // Only the photos near the visible part of the list are fetched, and
+      // the known size holds their space so the list doesn't jump as they load.
       var imgEl = document.createElement('img');
       imgEl.className = 'exercise-image';
-      imgEl.src = 'exercises/images/' + item.filename;
+      imgEl.loading = 'lazy';
+      imgEl.decoding = 'async';
+      if (item.width && item.height) {
+        imgEl.width = item.width;
+        imgEl.height = item.height;
+      }
+      imgEl.src = 'exercises/images/' + item.file;
       imgEl.alt = item.label;
 
       el.exerciseScroller.appendChild(nameEl);

@@ -16,11 +16,21 @@ Drop your exercise photos in this folder.
 Examples:
 
 ```
-Arms - Biceps.jpg
-Arms - Triceps.jpg
-Legs - Squats.jpg
-Chest - Push Up.jpg
-Core - Plank.jpg
+Arms - Biceps.webp
+Arms - Triceps.webp
+Legs - Squats.webp
+Chest - Push Up.webp
+Core - Plank.webp
+```
+
+**Keep the photos small.** The page shows them at most about 400 pixels
+wide, so anything wider than 860 pixels is wasted download on a phone. The
+photos here are WebP at 860 pixels wide or less, quality 80, which brought the
+folder from 2.5 MB to under 400 KB. Any image tool can do this; with Node and
+the `sharp` package it is one line per file:
+
+```
+node -e "require('sharp')('in.jpg').resize({width:860,withoutEnlargement:true}).webp({quality:80}).toFile('out.webp')"
 ```
 
 **After adding or renaming files, regenerate the manifest** by running, from the
@@ -31,9 +41,6 @@ node tools/generate-manifest.js
 ```
 
 This rewrites `exercises/manifest.json` with the current list of files
-(alphabetically sorted), which is what the site actually reads at runtime —
-the app never scans this folder directly.
-
-The four sample filenames currently listed in `manifest.json` don't have
-matching image files yet — they're placeholders showing the naming pattern.
-Replace them with your own photos and regenerate the manifest.
+(alphabetically sorted) and each one's width and height in pixels, which is
+what the site actually reads at runtime — the app never scans this folder
+directly.

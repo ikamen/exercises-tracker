@@ -32,6 +32,11 @@ var SHELL_URLS = SHELL.map(function (path) { return new URL(path, self.location.
 var INDEX_URL = SHELL_URLS[0];
 var SCOPE_PATH = new URL('./', self.location.href).pathname; // '/' on the live site
 
+// The list of exercise images. Fetched fresh when there's a connection so a
+// newly added photo shows up without a CACHE_VERSION bump; the kept copy is
+// the fallback when offline.
+var MANIFEST_URL = new URL('exercises/manifest.json', self.location.href).href;
+
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -79,18 +84,27 @@ self.addEventListener('fetch', function (event) {
   var isPage = request.mode === 'navigate';
   if (!isPage && !isCacheable(url)) return;
 
-  // Cache first: any page load is index.html; anything else is looked up by
-  // URL and, when missing, fetched once and kept.
   var key = isPage ? INDEX_URL : request;
   event.respondWith(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.match(key, { ignoreSearch: true, ignoreVary: true }).then(function (cached) {
-        if (cached) return cached;
+      function fromNetwork() {
         return fetch(request).then(function (response) {
           if (response.ok) cache.put(key, response.clone());
           return response;
         });
-      });
+      }
+      function fromCache() {
+        return cache.match(key, { ignoreSearch: true, ignoreVary: true });
+      }
+      if (url.href === MANIFEST_URL) {
+        // Network first, kept copy when offline.
+        return fromNetwork().catch(function () {
+          return fromCache().then(function (cached) { if (cached) return cached; throw new Error('offline'); });
+        });
+      }
+      // Cache first: any page load is index.html; anything else is looked up
+      // by URL and, when missing, fetched once and kept.
+      return fromCache().then(function (cached) { return cached || fromNetwork(); });
     })
   );
 });

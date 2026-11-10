@@ -41,17 +41,17 @@ const CONFIG = {
 The publishable key is meant to be public; the table rules decide what can be
 read and written.
 
-## 3. Add your exercise images (optional for now)
+## 3. Add your exercise images
 
-The site ships with a **sample manifest** (`exercises/manifest.json`) listing
-example filenames, but no actual image files — so the Exercises tab will
-show broken image icons until you add real photos.
+The Exercises tab shows the photos listed in `exercises/manifest.json`, which
+records each file's name and size in pixels so the page can lay the list out
+before the photos arrive.
 
 To add your own:
 
 1. Drop image files into `exercises/images/`, named like
-   `Arms - Biceps.jpg` (see [`exercises/images/README.md`](exercises/images/README.md)
-   for the exact naming rules).
+   `Arms - Biceps.webp` (see [`exercises/images/README.md`](exercises/images/README.md)
+   for the naming rules and the recommended size).
 2. Regenerate the manifest:
    ```
    node tools/generate-manifest.js
@@ -94,7 +94,7 @@ config.js                     Supabase URL and publishable key (edit this)
 app.js                        All front-end logic
 sw.js                         Service worker: offline copy of the files above (bump CACHE_VERSION, see step 5)
 supabase/schema.sql           Run in the Supabase SQL Editor (see step 1)
-exercises/manifest.json       List of exercise image filenames (regenerate after adding images)
+exercises/manifest.json       List of exercise images and their sizes (regenerate after adding images)
 exercises/images/             Put your exercise photos here
 tools/generate-manifest.js    Run after adding/renaming images: node tools/generate-manifest.js
 ```
