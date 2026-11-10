@@ -10,8 +10,11 @@
   Cache-Control: public, max-age=0, stale-while-revalidate=604800
 
 # Images and icons change rarely, so keep them for a day without any check.
+# Rules add up rather than override, so drop the catch-all's value first.
 /exercises/images/*
+  ! Cache-Control
   Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
 
 /icons/*
+  ! Cache-Control
   Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
