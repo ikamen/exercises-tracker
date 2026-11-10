@@ -1,0 +1,17 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/).
+#
+# Pages' default is "max-age=0, must-revalidate", which makes the browser
+# re-check every file on every launch, each check a full round trip before
+# the app can start. stale-while-revalidate lets the browser use its saved
+# copy straight away and re-check in the background, so a new deploy shows
+# up on the launch after the first one that follows it.
+
+/*
+  Cache-Control: public, max-age=0, stale-while-revalidate=604800
+
+# Images and icons change rarely, so keep them for a day without any check.
+/exercises/images/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
+
+/icons/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=2592000
