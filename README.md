@@ -69,6 +69,22 @@ To add your own:
 5. Open that URL on your phone and (optional) add it to your home screen for
    quick access.
 
+## 5. Shipping changes to the app's files
+
+[`sw.js`](sw.js) is a service worker that keeps a copy of the app's files
+(`index.html`, `styles.css`, `config.js`, `app.js`, the manifest, the icons and
+the supabase-js script) on the device, so the app opens from there on every
+launch and works offline. Exercise images are kept the first time they are
+shown. Nothing on the Supabase host is ever cached: reads, saves and the login
+always go to the network.
+
+**Whenever you change any of those files, bump `CACHE_VERSION` in `sw.js`**
+(and keep its `SUPABASE_JS` URL in step with the `<script>` tag in
+`index.html`). Without the bump, phones that already have the app keep showing
+the old copy. With it, the browser notices the changed `sw.js` on the next
+launch, downloads the new files in the background, and the launch after that
+shows the new version. Data changes need no bump.
+
 ## Project structure
 
 ```
@@ -76,6 +92,7 @@ index.html                    Page markup (both tabs)
 styles.css                    Dark theme styling
 config.js                     Supabase URL and publishable key (edit this)
 app.js                        All front-end logic
+sw.js                         Service worker: offline copy of the files above (bump CACHE_VERSION, see step 5)
 supabase/schema.sql           Run in the Supabase SQL Editor (see step 1)
 exercises/manifest.json       List of exercise image filenames (regenerate after adding images)
 exercises/images/             Put your exercise photos here

@@ -698,6 +698,24 @@
     }
   });
 
+  // ---------- offline copy of the app ----------
+  // sw.js keeps the page's files on the device so the app opens from there
+  // on every launch and works offline; the data still comes from Supabase.
+  // updateViaCache: 'none' makes the browser always fetch sw.js itself from
+  // the site when it checks for a new version, whatever the cache headers.
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+        .then(function (reg) {
+          // Also check for a new version whenever the app comes back to the front.
+          document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible') reg.update().catch(function () {});
+          });
+        })
+        .catch(function () { /* no offline copy; the app still works online */ });
+    });
+  }
+
   // ---------- boot ----------
   loadTracker();
 
