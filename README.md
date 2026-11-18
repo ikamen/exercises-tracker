@@ -1,8 +1,9 @@
 # Exercise Tracker
 
-A mobile-optimised (430×932) two-tab web app: log which muscle groups you
-worked each day (stored in Supabase), and browse reference photos for
-exercises grouped by Arms / Legs / Chest / Core. Walks are tracked too.
+A mobile-optimised (430×932) two-tab web app that also fills large screens: log
+which muscle groups you worked each day (stored in Supabase), and browse
+reference photos for exercises grouped by Arms / Legs / Chest / Core. Walks are
+tracked too.
 
 It is plain HTML, CSS and JavaScript with Supabase as the backend. There is no
 build step, `package.json`, test suite or linter.

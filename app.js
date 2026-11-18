@@ -616,6 +616,9 @@
     el.exerciseEmpty.hidden = true;
 
     items.forEach(function (item) {
+      var card = document.createElement('div');
+      card.className = 'exercise-card';
+
       var nameEl = document.createElement('div');
       nameEl.className = 'exercise-name';
       nameEl.textContent = item.label;
@@ -633,8 +636,9 @@
       imgEl.src = 'exercises/images/' + item.file;
       imgEl.alt = item.label;
 
-      el.exerciseScroller.appendChild(nameEl);
-      el.exerciseScroller.appendChild(imgEl);
+      card.appendChild(nameEl);
+      card.appendChild(imgEl);
+      el.exerciseScroller.appendChild(card);
     });
   }
 
