@@ -6,7 +6,7 @@
 // upgraded), otherwise phones that already have the app keep the old copy.
 // The browser spots the changed sw.js on the next launch, downloads the new
 // files in the background, and the launch after that shows the new version.
-var CACHE_VERSION = 1;
+var CACHE_VERSION = 2;
 var CACHE_NAME = 'exercise-tracker-v' + CACHE_VERSION;
 
 // Everything the page needs before it can run. './' is index.html.
