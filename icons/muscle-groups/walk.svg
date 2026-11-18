@@ -1,51 +1,125 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 480" width="200" height="480" role="img" aria-label="Body outline of a person walking, with the legs highlighted">
-  <style>
-    .part { fill: #1b2230; stroke: #c3c9d6; stroke-width: 1.8; stroke-linejoin: round; }
-    .highlight { fill: #5b63d6; }
-    .detail { fill: none; stroke: #c3c9d6; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; }
-  </style>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="960" viewBox="0 0 200 480" role="img" aria-label="Shaded athletic person walking, seen from the side, with the legs highlighted in glowing blue" xmlns:c2pa="http://c2pa.org/manifest">
+<defs>
+<linearGradient id="skinCyl" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#8C5536"></stop>
+<stop offset="0.3" stop-color="#F9D9BE"></stop>
+<stop offset="0.62" stop-color="#DDA47E"></stop>
+<stop offset="1" stop-color="#8C5536"></stop>
+</linearGradient>
+<linearGradient id="skinFar" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#8C5536"></stop>
+<stop offset="0.35" stop-color="#DDA47E"></stop>
+<stop offset="1" stop-color="#8C5536"></stop>
+</linearGradient>
+<radialGradient id="skinRound" cx="0.4" cy="0.3" r="0.85">
+<stop offset="0" stop-color="#F9D9BE"></stop>
+<stop offset="0.5" stop-color="#DDA47E"></stop>
+<stop offset="1" stop-color="#8C5536"></stop>
+</radialGradient>
+<linearGradient id="blueCyl" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#2F44D6"></stop>
+<stop offset="0.3" stop-color="#A6BEFF"></stop>
+<stop offset="0.6" stop-color="#5D7BFF"></stop>
+<stop offset="1" stop-color="#2A3AB8"></stop>
+</linearGradient>
+<linearGradient id="blueFar" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#22309E"></stop>
+<stop offset="0.35" stop-color="#6A86F5"></stop>
+<stop offset="1" stop-color="#1C2784"></stop>
+</linearGradient>
+<linearGradient id="shorts" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#1E2438"></stop>
+<stop offset="0.35" stop-color="#4A5682"></stop>
+<stop offset="0.7" stop-color="#2E3654"></stop>
+<stop offset="1" stop-color="#151A2B"></stop>
+</linearGradient>
+<linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#5A4434"></stop>
+<stop offset="1" stop-color="#1E1610"></stop>
+</linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="6"></feGaussianBlur>
+</filter>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="0.8"></feGaussianBlur>
+</filter>
+<filter id="softMd" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="3"></feGaussianBlur>
+</filter>
+<filter id="drop" x="-30%" y="-30%" width="160%" height="160%">
+<feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"></feDropShadow>
+</filter>
 
-  <!-- Side view, walking to the right. Parts are drawn back to front so
-       nearer parts overlap the ones behind them. -->
+<path id="backThigh" d="M107 245 C100 280 88 312 79 337 L53 331 C52 300 60 262 69 235 Z"></path>
+<path id="backShin" d="M79 337 C72 370 58 405 48 434 L34 430 C34 410 38 385 46 368 C50 352 52 340 53 331 Z"></path>
+<path id="frontThigh" d="M119 234 C130 260 140 300 143 330 L119 340 C108 310 92 280 82 248 Z"></path>
+<path id="frontShin" d="M142 330 C144 360 140 400 138 436 L124 438 C122 410 114 380 117 352 C117 344 118 338 119 336 Z"></path>
+</defs>
 
-  <!-- Far arm, swinging forward -->
-  <path class="part" d="M124 98 C132 122 140 146 141 168 L121 174 C114 152 104 128 100 106 Z" />
-  <path class="part" d="M134 162 C146 166 154 170 162 174 L158 188 C148 186 136 184 126 180 Z" />
-  <ellipse class="part" cx="168" cy="183" rx="9" ry="8" transform="rotate(25 168 183)" />
+<ellipse cx="100" cy="461" rx="72" ry="4.5" fill="#000000" fill-opacity="0.55" filter="url(#softMd)"></ellipse>
 
-  <!-- Back leg, pushing off the toes -->
-  <path class="part" d="M34 428 L48 434 C56 444 64 448 72 452 C74 456 72 460 66 460 L52 460 C44 456 36 446 32 438 Z" />
-  <path class="part highlight" d="M79 337 C72 370 58 405 48 434 L34 430 C34 410 38 385 46 368 C50 352 52 340 53 331 Z" />
-  <path class="part highlight" d="M107 245 C100 280 88 312 79 337 L53 331 C52 300 60 262 69 235 Z" />
+<g fill="#5675FF" fill-opacity="0.8" filter="url(#glow)">
+<use xlink:href="#backThigh"></use>
+<use xlink:href="#backShin"></use>
+<use xlink:href="#frontThigh"></use>
+<use xlink:href="#frontShin"></use>
+</g>
 
-  <!-- Front leg, stepping onto the heel -->
-  <path class="part" d="M124 432 L138 432 C150 438 162 440 168 446 C168 452 164 456 156 456 L126 456 C120 456 118 446 124 432 Z" />
-  <path class="part highlight" d="M142 330 C144 360 140 400 138 436 L124 438 C122 410 114 380 117 352 C117 344 118 338 119 336 Z" />
-  <path class="part highlight" d="M119 234 C130 260 140 300 143 330 L119 340 C108 310 92 280 82 248 Z" />
+<g filter="url(#drop)">
+<g stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round">
+<path d="M124 98 C132 122 140 146 141 168 L121 174 C114 152 104 128 100 106 Z" fill="url(#skinFar)"></path>
+<path d="M134 162 C146 166 154 170 162 174 L158 188 C148 186 136 184 126 180 Z" fill="url(#skinFar)"></path>
+<ellipse cx="168" cy="183" rx="9" ry="8" transform="rotate(25 168 183)" fill="url(#skinFar)"></ellipse>
+</g>
 
-  <!-- Torso -->
-  <path class="part" d="M88 86 C104 80 120 82 128 94 C136 106 139 122 135 138 C130 152 124 166 122 182
-    C121 202 122 222 120 246 C108 256 90 258 78 250 C74 236 76 222 80 206
-    C84 190 82 170 79 150 C76 128 76 104 88 86 Z" />
+<path d="M34 428 L48 434 C56 444 64 448 72 452 C74 456 72 460 66 460 L52 460 C44 456 36 446 32 438 Z" fill="url(#skinFar)" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"></path>
+<use xlink:href="#backShin" fill="url(#blueFar)" stroke="#1C2784" stroke-width="1" stroke-linejoin="round"></use>
+<use xlink:href="#backThigh" fill="url(#blueFar)" stroke="#1C2784" stroke-width="1" stroke-linejoin="round"></use>
 
-  <!-- Neck and head -->
-  <path class="part" d="M102 58 L120 58 C119 68 120 76 122 86 L96 86 C100 78 102 68 102 58 Z" />
-  <ellipse class="part" cx="112" cy="38" rx="20" ry="25" />
-  <path class="detail" d="M104 33 C100 33 99 40 101 43 C102 45 104 46 105 45" />  <!-- ear -->
+<path d="M124 432 L138 432 C150 438 162 440 168 446 C168 452 164 456 156 456 L126 456 C120 456 118 446 124 432 Z" fill="url(#skinCyl)" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"></path>
+<use xlink:href="#frontShin" fill="url(#blueCyl)" stroke="#1E2A8C" stroke-width="1" stroke-linejoin="round"></use>
+<use xlink:href="#frontThigh" fill="url(#blueCyl)" stroke="#1E2A8C" stroke-width="1" stroke-linejoin="round"></use>
 
-  <!-- Near arm, swinging back -->
-  <path class="part" d="M96 172 C92 192 84 212 77 230 L63 226 C64 206 68 186 74 168 Z" />
-  <path class="part" d="M82 104 C86 88 112 88 116 108 C110 132 100 154 96 174 L74 170 C76 148 78 124 82 104 Z" />
-  <ellipse class="part" cx="69" cy="238" rx="8" ry="10" transform="rotate(14 69 238)" />
+<path d="M88 86 C104 80 120 82 128 94 C136 106 139 122 135 138 C130 152 124 166 122 182 C121 202 122 222 120 246 C108 256 90 258 78 250 C74 236 76 222 80 206 C84 190 82 170 79 150 C76 128 76 104 88 86 Z" fill="url(#skinRound)" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"></path>
 
-  <!-- Muscle definition lines -->
-  <path class="detail" d="M118 126 C126 138 132 140 136 136" />  <!-- chest -->
-  <path class="detail" d="M126 152 C122 172 121 192 122 212" />  <!-- abdomen -->
-  <path class="detail" d="M80 214 C88 226 96 236 104 244" />     <!-- glute -->
-  <path class="detail" d="M80 124 C84 138 86 150 84 162" />      <!-- triceps -->
-  <path class="detail" d="M124 262 C130 284 136 304 138 322" />  <!-- front thigh -->
-  <path class="detail" d="M124 344 C126 352 132 356 140 352" />  <!-- front knee -->
-  <path class="detail" d="M120 360 C122 380 126 400 130 420" />  <!-- front shin -->
-  <path class="detail" d="M98 262 C92 284 86 304 80 322" />      <!-- back thigh -->
-  <path class="detail" d="M48 372 C46 384 44 396 42 408" />      <!-- back calf -->
-</svg>
+<path d="M80 204 C98 209 110 209 122 204 L121 240 C126 256 132 272 136 290 L112 297 C106 285 100 275 96 266 C92 277 86 288 80 297 L59 291 C63 270 69 252 75 237 C78 226 79 214 80 204 Z" fill="url(#shorts)" stroke="#0E1222" stroke-width="1" stroke-linejoin="round"></path>
+
+<path d="M102 58 L120 58 C119 68 120 76 122 86 L96 86 C100 78 102 68 102 58 Z" fill="url(#skinFar)" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"></path>
+<path d="M132 34 C134 38 136 42 136.5 45 C136.8 47 135 48 132 48.5 Z" fill="#DDA47E" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round"></path>
+<ellipse cx="112" cy="38" rx="20" ry="25" fill="url(#skinRound)" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1"></ellipse>
+
+<g stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linejoin="round">
+<path d="M96 172 C92 192 84 212 77 230 L63 226 C64 206 68 186 74 168 Z" fill="url(#skinCyl)"></path>
+<path d="M82 104 C86 88 112 88 116 108 C110 132 100 154 96 174 L74 170 C76 148 78 124 82 104 Z" fill="url(#skinCyl)"></path>
+<ellipse cx="69" cy="238" rx="8" ry="10" transform="rotate(14 69 238)" fill="url(#skinRound)"></ellipse>
+</g>
+</g>
+
+<path d="M80 204 C98 209 110 209 122 204 L122 211 C110 215 98 215 80 211 Z" fill="#7C8CC8"></path>
+<path d="M82 206 C96 210 108 210 116 208" fill="none" stroke="#FFFFFF" stroke-opacity="0.45" stroke-width="1" stroke-linecap="round"></path>
+<path d="M118 216 C124 240 130 262 134 286" fill="none" stroke="#5675FF" stroke-width="2" stroke-linecap="round"></path>
+<path d="M96 266 L97 216" fill="none" stroke="#0B0F1C" stroke-opacity="0.5" stroke-width="1.2" filter="url(#soft)"></path>
+
+<path d="M92 40 C89 22 99 12 113 12 C126 12 133 20 132.5 31 C125 24 115 22 105 26 C99 29 96 35 92 40 Z" fill="url(#hair)"></path>
+<path d="M104 33 C100 33 99 40 101 43 C102 45 104 46 105 45" fill="#DDA47E" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linecap="round"></path>
+<ellipse cx="125" cy="37" rx="2.6" ry="1.6" fill="#8C5536" fill-opacity="0.75" filter="url(#soft)"></ellipse>
+<path d="M122 53 Q125 54 127.5 52.5" fill="none" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1" stroke-linecap="round"></path>
+<ellipse cx="108" cy="22" rx="6" ry="3" fill="#FFFFFF" fill-opacity="0.25" filter="url(#soft)"></ellipse>
+<ellipse cx="120" cy="66" rx="9" ry="3" fill="#000000" fill-opacity="0.25" filter="url(#softMd)"></ellipse>
+
+<g fill="none" stroke-linecap="round">
+<path d="M118 126 C126 138 132 140 136 136" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M126 152 C122 172 121 192 122 204" stroke="#8C5536" stroke-opacity="0.6" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M80 124 C84 138 86 150 84 162" stroke="#8C5536" stroke-opacity="0.65" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M88 112 C92 104 100 100 108 102" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M124 300 C130 306 136 314 138 322" stroke="#1E2A8C" stroke-opacity="0.8" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M124 344 C126 352 132 356 140 352" stroke="#1E2A8C" stroke-opacity="0.8" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M120 360 C122 380 126 400 130 420" stroke="#1E2A8C" stroke-opacity="0.75" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M124 362 C126 382 129 400 132 418" stroke="#D6E1FF" stroke-opacity="0.4" stroke-width="0.9"></path>
+<path d="M86 300 C84 310 82 316 80 322" stroke="#141C66" stroke-opacity="0.8" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M48 372 C46 384 44 396 42 408" stroke="#141C66" stroke-opacity="0.8" stroke-width="1.6" filter="url(#soft)"></path>
+<path d="M140 336 C143 360 141 396 139 430" stroke="#C9D7FF" stroke-opacity="0.5" stroke-width="0.9"></path>
+<path d="M134 136 C129 152 124 166 122 182" stroke="#9DB8FF" stroke-opacity="0.4" stroke-width="0.9"></path>
+</g>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo0OGQ2YjBmNC1mMWEzLTRiMmEtOWU3OC01NDk3MjhiODI1ZjQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaGJX5F1FhwYSzS95Q78Kg0sAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDphYmM3ZTNlZC05Yjk5LTQ0ODMtYmEzNi05MDBmM2ZlZWZjMTVscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoFSMxUeUbITgzLUUcuXUyZQAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggMT0d8DFHuXkQnyxIuv/YjgaT8388VV0zmpR3RWwWHgikZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaEO3ThGB5Q05U8LGEuP1YTQAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIJV+iYeEVXlldovQsG1/UC6BvP6q6jgKjYzID9y5TQP5ZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GSK2Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjQ4ZDZiMGY0LWYxYTMtNGIyYS05ZTc4LTU0OTcyOGI4MjVmNC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjdmMGExNjU1LTFkZjEtNGVjMy1hNmYwLTI0ZDZjNmE0MTE0NnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAxPR3wMUe5eRCfLEi6/9iOBpPzfzxVXTOalHdFbBYeCKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggHcJazeIX4CW7LfLYi9LkfTCjComMozcRkx5EjZBAd/GiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggfBSWCKwd73q4VF8VtmaTVYfg2/xqb8qa0J8nhY3s9Sh0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQEFmhEcnDVT9j3pakvw4/O8OwEElnnGlk60IEqlD/KTy4mUvr90nUgw837GalBSdufY6thiitVij1FtSLO75WsE=</c2pa:manifest></metadata></svg>

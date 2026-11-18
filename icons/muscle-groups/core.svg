@@ -1,94 +1,169 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 480" width="200" height="480" role="img" aria-label="Body outline with the core highlighted">
-  <style>
-    .fill { fill: #1b2230; stroke: #1b2230; stroke-width: 1; }
-    .highlight { fill: #5b63d6; stroke: #5b63d6; stroke-width: 0.6; }
-    .outline { fill: none; stroke: #c3c9d6; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .detail { fill: none; stroke: #c3c9d6; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; opacity: 0.75; }
-  </style>
-  <defs>
-    <!-- Every body part is drawn for the figure's left half (viewer's left) and mirrored. -->
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="400" height="960" viewBox="0 0 200 480" role="img" aria-label="Shaded athletic body with the core highlighted in glowing blue" xmlns:c2pa="http://c2pa.org/manifest">
+<defs>
+<path id="body-fill" d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 L91 62 L90 76 C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180 C38 192 37 205 38 218 C39 228 40 236 41 242 C37 250 37 262 39 272 C41 280 46 283 50 278 C52 272 53 262 52 252 C52 248 51 245 51 242 C53 228 56 210 57 196 C58 190 58 186 58 182 C61 168 63 150 64 134 L66 126 C68 140 69 150 70 160 C71 175 73 190 74 200 C74 212 72 222 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358 C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462 C70 466 76 468 84 468 L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440 C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254 Z"></path>
+<path id="arm-area" d="M64 89 C55 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180 C38 192 37 205 38 218 C39 228 40 236 41 242 L51 242 C53 228 56 210 57 196 C58 190 58 186 58 182 C60 168 61 152 61 140 C58 122 59 106 64 89 Z"></path>
+<path id="leg-area" d="M73.6 214 C73 222 71.5 228 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358 C66 372 66 390 70 410 C73 425 76 438 77 446 L89 440 C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254 L98 250 C92 240 82 226 73.6 214 Z"></path>
+<path id="chest-area" d="M100 87 L96 86 C88 84 76 88 66 94 L62 97 C60 106 59 116 60 122 L66 124 C78 133 90 133 99 126 L100 126 Z"></path>
+<path id="core-area" d="M100 126 L99 126 C90 133 78 133 66 124 L66 126 C68 140 69 150 70 160 C71 175 73 190 74 200 C74 206 73.8 210 73.6 214 C82 226 92 240 98 250 L100 252 Z"></path>
+<path id="shorts-half" d="M100 199 L74 199 C73 214 69 228 66 240 C62 258 62 280 63 302 C74 305 86 306 96 303 C98 285 99 268 100 256 Z"></path>
+<path id="hair-half" d="M100 9 C87 9 78 19 79.5 34 C82 25 90 19 100 19 Z"></path>
 
-    <!-- Solid silhouette, used as the background fill -->
-    <path id="body-fill" d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 L91 62 L90 76
-      C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180
-      C38 192 37 205 38 218 C39 228 40 236 41 242 C37 250 37 262 39 272 C41 280 46 283 50 278
-      C52 272 53 262 52 252 C52 248 51 245 51 242 C53 228 56 210 57 196 C58 190 58 186 58 182
-      C61 168 63 150 64 134 L66 126 C68 140 69 150 70 160 C71 175 73 190 74 200
-      C74 212 72 222 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358
-      C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462 C70 466 76 468 84 468
-      L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440 C88 425 92 400 92 380
-      C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254 Z" />
+<clipPath id="bodyClip">
+<use xlink:href="#body-fill"></use>
+<use xlink:href="#body-fill" transform="translate(200 0) scale(-1 1)"></use>
+</clipPath>
+<clipPath id="shortsClip">
+<use xlink:href="#shorts-half"></use>
+<use xlink:href="#shorts-half" transform="translate(200 0) scale(-1 1)"></use>
+</clipPath>
 
-    <!-- Arm area: shoulder (deltoid) down to the wrist -->
-    <path id="arm-area" d="M64 89 C55 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180
-      C38 192 37 205 38 218 C39 228 40 236 41 242 L51 242 C53 228 56 210 57 196
-      C58 190 58 186 58 182 C60 168 61 152 61 140 C58 122 59 106 64 89 Z" />
+<g id="half-outline" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 C94 66 98 67 100 67"></path>
+<path d="M80 34 C76 33 75 40 77 44 C78 47 80 48 81 47"></path>
+<path d="M91 62 L90 76 C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136 C43 150 42 165 42 180 C38 192 37 205 38 218 C39 228 40 236 41 242 C37 250 37 262 39 272 C41 280 46 283 50 278 C52 272 53 262 52 252 C52 248 51 245 51 242 C53 228 56 210 57 196 C58 190 58 186 58 182 C61 168 63 150 64 134 L66 126 C68 140 69 150 70 160 C71 175 73 190 74 200 C74 212 72 222 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358 C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462 C70 466 76 468 84 468 L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440 C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254"></path>
+</g>
+<g id="half-details" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M93 66 C95 72 97 78 98 84"></path>
+<path d="M96 86 C88 84 76 88 66 94"></path>
+<path d="M61 140 C58 122 59 106 64 89"></path>
+<path d="M99 126 C90 133 78 133 66 124"></path>
+<path d="M58 140 C52 150 50 165 52 178"></path>
+<path d="M46 184 C50 187 54 187 57 184"></path>
+<path d="M45 192 C48 205 50 222 48 238"></path>
+<path d="M51 252 C54 258 54 264 51 268"></path>
+<path d="M86 134 C83 152 83 176 86 200 C88 214 94 226 100 232"></path>
+<path d="M100 152 C94 153 89 152 85 150"></path>
+<path d="M100 174 C94 175 89 174 84 172"></path>
+<path d="M100 196 C94 197 89 196 85 194"></path>
+<path d="M73 150 C77 162 79 176 79 190"></path>
+<path d="M76 252 C82 280 84 305 82 330"></path>
+<path d="M93 298 C88 314 85 328 87 340"></path>
+<path d="M76 340 C78 348 84 352 89 348"></path>
+<path d="M75 364 C77 382 79 402 81 424"></path>
+<path d="M100 100 L100 124 M100 136 L100 196"></path>
+</g>
 
-    <!-- Leg area: groin crease down to the ankle -->
-    <path id="leg-area" d="M73.6 214 C73 222 71.5 228 70 232 C66 250 64 268 65 290 C66 310 70 325 72 338
-      C71 346 70 352 69 358 C66 372 66 390 70 410 C73 425 76 438 77 446 L89 440
-      C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254
-      L98 250 C92 240 82 226 73.6 214 Z" />
+<linearGradient id="hl" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#9DB8FF"></stop>
+<stop offset="0.5" stop-color="#5D7BFF"></stop>
+<stop offset="1" stop-color="#3A4FD8"></stop>
+</linearGradient>
+<linearGradient id="light" x1="30" y1="0" x2="170" y2="0" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.28"></stop>
+<stop offset="0.45" stop-color="#FFFFFF" stop-opacity="0"></stop>
+<stop offset="0.55" stop-color="#000000" stop-opacity="0"></stop>
+<stop offset="1" stop-color="#000000" stop-opacity="0.35"></stop>
+</linearGradient>
+<linearGradient id="cyl" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#000000" stop-opacity="0.32"></stop>
+<stop offset="0.3" stop-color="#FFFFFF" stop-opacity="0.26"></stop>
+<stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0"></stop>
+<stop offset="0.85" stop-color="#000000" stop-opacity="0.15"></stop>
+<stop offset="1" stop-color="#000000" stop-opacity="0.42"></stop>
+</linearGradient>
+<linearGradient id="cylSoft" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#000000" stop-opacity="0.25"></stop>
+<stop offset="0.3" stop-color="#FFFFFF" stop-opacity="0.18"></stop>
+<stop offset="0.6" stop-color="#FFFFFF" stop-opacity="0"></stop>
+<stop offset="1" stop-color="#000000" stop-opacity="0.3"></stop>
+</linearGradient>
+<radialGradient id="headShade" cx="0.4" cy="0.35" r="0.7">
+<stop offset="0.4" stop-color="#000000" stop-opacity="0"></stop>
+<stop offset="1" stop-color="#000000" stop-opacity="0.4"></stop>
+</radialGradient>
+<linearGradient id="shortsShade" x1="62" y1="0" x2="138" y2="0" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0.12"></stop>
+<stop offset="0.25" stop-color="#FFFFFF" stop-opacity="0.2"></stop>
+<stop offset="0.6" stop-color="#000000" stop-opacity="0.1"></stop>
+<stop offset="1" stop-color="#000000" stop-opacity="0.5"></stop>
+</linearGradient>
+<linearGradient id="hair" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#5A4434"></stop>
+<stop offset="1" stop-color="#1E1610"></stop>
+</linearGradient>
 
-    <!-- Chest area: collarbone down to the lower edge of the chest -->
-    <path id="chest-area" d="M100 87 L96 86 C88 84 76 88 66 94 L62 97 C60 106 59 116 60 122 L66 124
-      C78 133 90 133 99 126 L100 126 Z" />
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="6"></feGaussianBlur>
+</filter>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="0.8"></feGaussianBlur>
+</filter>
+<filter id="softMd" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="3"></feGaussianBlur>
+</filter>
+<filter id="drop" x="-30%" y="-30%" width="160%" height="160%">
+<feDropShadow dx="3" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.5"></feDropShadow>
+</filter>
+</defs>
 
-    <!-- Core area: below the chest down to the groin crease -->
-    <path id="core-area" d="M100 126 L99 126 C90 133 78 133 66 124 L66 126 C68 140 69 150 70 160
-      C71 175 73 190 74 200 C74 206 73.8 210 73.6 214 C82 226 92 240 98 250 L100 252 Z" />
+<ellipse cx="100" cy="470" rx="42" ry="4" fill="#000000" fill-opacity="0.55" filter="url(#softMd)"></ellipse>
 
-    <!-- Outer contour: head, neck, shoulder, arm, hand, torso side, leg, foot -->
-    <g id="half-outline">
-      <path d="M100 12 C88 12 80 22 80 36 C80 48 84 56 90 62 C94 66 98 67 100 67" />
-      <path d="M80 34 C76 33 75 40 77 44 C78 47 80 48 81 47" />
-      <path d="M91 62 L90 76 C84 82 72 86 62 90 C54 92 48 98 46 110 C44 120 44 128 45 136
-        C43 150 42 165 42 180 C38 192 37 205 38 218 C39 228 40 236 41 242
-        C37 250 37 262 39 272 C41 280 46 283 50 278 C52 272 53 262 52 252 C52 248 51 245 51 242
-        C53 228 56 210 57 196 C58 190 58 186 58 182 C61 168 63 150 64 134 L66 126
-        C68 140 69 150 70 160 C71 175 73 190 74 200 C74 212 72 222 70 232
-        C66 250 64 268 65 290 C66 310 70 325 72 338 C71 346 70 352 69 358
-        C66 372 66 390 70 410 C73 425 76 438 77 446 C74 452 70 458 70 462
-        C70 466 76 468 84 468 L93 468 C95 466 94 460 92 454 C90 448 89 444 89 440
-        C88 425 92 400 92 380 C92 368 90 360 91 350 C92 335 95 320 96 300 C98 285 99 268 100 254" />
-    </g>
+<g fill="#5675FF" fill-opacity="0.85" filter="url(#glow)">
+<use xlink:href="#core-area"></use>
+<use xlink:href="#core-area" transform="translate(200 0) scale(-1 1)"></use>
+</g>
 
-    <!-- Muscle definition lines -->
-    <g id="half-details">
-      <path d="M93 66 C95 72 97 78 98 84" />                         <!-- neck -->
-      <path d="M96 86 C88 84 76 88 66 94" />                         <!-- collarbone -->
-      <path d="M61 140 C58 122 59 106 64 89" />                      <!-- front of the shoulder -->
-      <path d="M99 126 C90 133 78 133 66 124" />                     <!-- lower edge of the chest -->
-      <path d="M58 140 C52 150 50 165 52 178" />                     <!-- biceps -->
-      <path d="M46 184 C50 187 54 187 57 184" />                     <!-- elbow -->
-      <path d="M45 192 C48 205 50 222 48 238" />                     <!-- forearm -->
-      <path d="M51 252 C54 258 54 264 51 268" />                     <!-- thumb -->
-      <path d="M86 134 C83 152 83 176 86 200 C88 214 94 226 100 232" /> <!-- abs, outer edge -->
-      <path d="M100 152 C94 153 89 152 85 150" />                    <!-- abs -->
-      <path d="M100 174 C94 175 89 174 84 172" />
-      <path d="M100 196 C94 197 89 196 85 194" />
-      <path d="M73 150 C77 162 79 176 79 190" />                     <!-- side of the waist -->
-      <path d="M74 214 C82 226 92 240 98 250" />                     <!-- groin crease -->
-      <path d="M76 252 C82 280 84 305 82 330" />                     <!-- thigh -->
-      <path d="M93 298 C88 314 85 328 87 340" />                     <!-- inner thigh -->
-      <path d="M76 340 C78 348 84 352 89 348" />                     <!-- kneecap -->
-      <path d="M75 364 C77 382 79 402 81 424" />                     <!-- shin -->
-    </g>
-  </defs>
+<g filter="url(#drop)">
+<use xlink:href="#body-fill" fill="#DDA47E" stroke="#DDA47E" stroke-width="1"></use>
+<use xlink:href="#body-fill" fill="#DDA47E" stroke="#DDA47E" stroke-width="1" transform="translate(200 0) scale(-1 1)"></use>
+</g>
 
-  <!-- Base silhouette -->
-  <use class="fill" href="#body-fill" />
-  <use class="fill" href="#body-fill" transform="translate(200 0) scale(-1 1)" />
+<g fill="url(#hl)" fill-opacity="0.9">
+<use xlink:href="#core-area"></use>
+<use xlink:href="#core-area" transform="translate(200 0) scale(-1 1)"></use>
+</g>
 
-  <!-- Highlighted area -->
-  <use class="highlight" href="#core-area" />
-  <use class="highlight" href="#core-area" transform="translate(200 0) scale(-1 1)" />
+<g clip-path="url(#bodyClip)">
+<rect x="0" y="0" width="200" height="480" fill="url(#light)"></rect>
+<rect x="60" y="76" width="80" height="182" fill="url(#cylSoft)"></rect>
+<rect x="36" y="88" width="30" height="196" fill="url(#cyl)"></rect>
+<rect x="134" y="88" width="30" height="196" fill="url(#cyl)"></rect>
+<rect x="63" y="228" width="38" height="244" fill="url(#cyl)"></rect>
+<rect x="99" y="228" width="38" height="244" fill="url(#cyl)"></rect>
+<ellipse cx="100" cy="38" rx="21" ry="27" fill="url(#headShade)"></ellipse>
+<ellipse cx="100" cy="70" rx="12" ry="5" fill="#000000" fill-opacity="0.3" filter="url(#softMd)"></ellipse>
+<ellipse cx="84" cy="106" rx="11" ry="6" fill="#FFFFFF" fill-opacity="0.22" filter="url(#softMd)"></ellipse>
+<ellipse cx="51" cy="108" rx="4" ry="9" fill="#FFFFFF" fill-opacity="0.25" filter="url(#softMd)"></ellipse>
+<ellipse cx="76" cy="282" rx="4" ry="22" fill="#FFFFFF" fill-opacity="0.16" filter="url(#softMd)"></ellipse>
+<ellipse cx="74" cy="390" rx="3" ry="20" fill="#FFFFFF" fill-opacity="0.16" filter="url(#softMd)"></ellipse>
+<ellipse cx="100" cy="128" rx="38" ry="4" fill="#000000" fill-opacity="0.18" filter="url(#softMd)"></ellipse>
+</g>
 
-  <!-- Lines -->
-  <use class="outline" href="#half-outline" />
-  <use class="outline" href="#half-outline" transform="translate(200 0) scale(-1 1)" />
-  <use class="detail" href="#half-details" />
-  <use class="detail" href="#half-details" transform="translate(200 0) scale(-1 1)" />
-  <path class="detail" d="M100 100 L100 124 M100 136 L100 230" />
-  <ellipse class="detail" cx="100" cy="206" rx="1.8" ry="2.8" />
-</svg>
+<g fill="none" stroke="#C9D7FF" stroke-opacity="0.55" stroke-width="0.8">
+<use xlink:href="#core-area"></use>
+<use xlink:href="#core-area" transform="translate(200 0) scale(-1 1)"></use>
+</g>
+
+<use xlink:href="#half-details" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="0.9" transform="translate(0.6 1.2)"></use>
+<use xlink:href="#half-details" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="0.9" transform="translate(200.6 1.2) scale(-1 1)"></use>
+<use xlink:href="#half-details" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1.6" filter="url(#soft)"></use>
+<use xlink:href="#half-details" stroke="#8C5536" stroke-opacity="0.7" stroke-width="1.6" filter="url(#soft)" transform="translate(200 0) scale(-1 1)"></use>
+<ellipse cx="100" cy="206" rx="1.6" ry="2.6" fill="#8C5536" fill-opacity="0.7"></ellipse>
+
+<use xlink:href="#half-outline" stroke="#8C5536" stroke-opacity="0.75" stroke-width="1"></use>
+<use xlink:href="#half-outline" stroke="#8C5536" stroke-opacity="0.75" stroke-width="1" transform="translate(200 0) scale(-1 1)"></use>
+<use xlink:href="#half-outline" stroke="#9DB8FF" stroke-opacity="0.35" stroke-width="0.8" transform="translate(199.4 0) scale(-1 1)"></use>
+
+<g>
+<use xlink:href="#shorts-half" fill="#2E3654" stroke="#2E3654" stroke-width="0.8"></use>
+<use xlink:href="#shorts-half" fill="#2E3654" stroke="#2E3654" stroke-width="0.8" transform="translate(200 0) scale(-1 1)"></use>
+<g clip-path="url(#shortsClip)">
+<rect x="60" y="196" width="80" height="112" fill="url(#shortsShade)"></rect>
+<rect x="60" y="196" width="80" height="8" fill="#7C8CC8"></rect>
+<rect x="60" y="197" width="40" height="1.5" fill="#FFFFFF" fill-opacity="0.45"></rect>
+<path d="M100 206 L100 254" stroke="#0B0F1C" stroke-opacity="0.6" stroke-width="1.4" filter="url(#soft)"></path>
+<path d="M78 210 C80 240 80 270 78 300" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="3" filter="url(#soft)"></path>
+</g>
+<path d="M67 238 C64 258 63.5 280 64 300" fill="none" stroke="#5675FF" stroke-width="2" stroke-linecap="round"></path>
+<path d="M133 238 C136 258 136.5 280 136 300" fill="none" stroke="#5675FF" stroke-width="2" stroke-linecap="round"></path>
+</g>
+
+<use xlink:href="#hair-half" fill="url(#hair)"></use>
+<use xlink:href="#hair-half" fill="url(#hair)" transform="translate(200 0) scale(-1 1)"></use>
+<ellipse cx="93" cy="37" rx="3.6" ry="1.8" fill="#8C5536" fill-opacity="0.6" filter="url(#soft)"></ellipse>
+<ellipse cx="107" cy="37" rx="3.6" ry="1.8" fill="#8C5536" fill-opacity="0.6" filter="url(#soft)"></ellipse>
+<path d="M101 38 C102 42 103 45 101 47" fill="none" stroke="#8C5536" stroke-opacity="0.6" stroke-width="1.1" stroke-linecap="round" filter="url(#soft)"></path>
+<path d="M96.5 52 Q100 53.5 103.5 52" fill="none" stroke="#8C5536" stroke-opacity="0.65" stroke-width="1.1" stroke-linecap="round"></path>
+<ellipse cx="94" cy="26" rx="5" ry="3" fill="#FFFFFF" fill-opacity="0.25" filter="url(#soft)"></ellipse>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTplYjU5ZjUxYS1jMjBiLTRjZDQtYmQzMS00ZGI5OGQ3OTkyZWQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaC1ETwhoIqmz+i+rK9KdoG8AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpiODU1NTkzNi1kNjUyLTQ3YjMtYmJkMS1jMGUwZmE4Yzc5ZjhscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoYVdAsDQPFy1yl3QPDeCCYwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggxd8Y6YARsZUcUd1ATox/pzc5s3PIWvgeGGjJoGdZjfKkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaEvn3bqIC2bRUimhW5YYAfMAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIP8Ywh5jbYctRzpI9/vgIgQEfMG0dzn59aX6GmPd7tU7ZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GS48Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmViNTlmNTFhLWMyMGItNGNkNC1iZDMxLTRkYjk4ZDc5OTJlZC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmNjYWU3ZWY2LTU4ZTItNDliMS05YzUyLWMyNDRkMmZmMDlmNHJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDF3xjpgBGxlRxR3UBOjH+nNzmzc8ha+B4YaMmgZ1mN8qJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFgg8yshSPmrY/LXipJxsDUEIKbLoY9DWMKyEuCIJjhUv1yiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggf6dm+EWfmCzHdmeZE4KQXY2VU3uZlLSFYGA8Eu2nXel0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQMOj/MOiKBId91zyx5TX5XVJydEshRMV2B+2KBJ0S8H5DecluLcfBoVBk/OHO9LxvjH3jwKACDvq4b+45vKdFLY=</c2pa:manifest></metadata></svg>
