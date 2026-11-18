@@ -4,6 +4,9 @@ A mobile-optimised (430×932) two-tab web app: log which muscle groups you
 worked each day (stored in Supabase), and browse reference photos for
 exercises grouped by Arms / Legs / Chest / Core. Walks are tracked too.
 
+It is plain HTML, CSS and JavaScript with Supabase as the backend. There is no
+build step, `package.json`, test suite or linter.
+
 ## 1. Set up the Supabase database
 
 1. Create a project at [supabase.com](https://supabase.com) (or use an
@@ -18,7 +21,8 @@ exercises grouped by Arms / Legs / Chest / Core. Walks are tracked too.
 4. Open **SQL Editor > New query**, paste in
    [`supabase/schema.sql`](supabase/schema.sql) and click **Run**. This creates
    the `exercise_days` table with rules that only let the logged-in user read
-   and write their own days. It is safe to re-run.
+   and write their own days. It is safe to re-run, so keep it that way when
+   changing it.
 
    For the one-off move from the Google Sheet, run `supabase/setup.sql`
    instead: it does the same as `schema.sql` and also copies in the days from
@@ -53,23 +57,28 @@ To add your own:
    `Arms - Biceps.webp` (see [`exercises/images/README.md`](exercises/images/README.md)
    for the naming rules and the recommended size).
 2. Regenerate the manifest:
-   ```
+   ```bash
    node tools/generate-manifest.js
    ```
 3. Commit and push the updated `exercises/manifest.json` and image files.
 
-## 4. Host on GitHub Pages
+## 4. Run it locally
 
-1. Push this whole folder to a GitHub repository.
-2. In the repo, go to **Settings > Pages**.
-3. Under "Build and deployment", set **Source** to "Deploy from a branch",
-   pick your branch (e.g. `main`) and the root folder (`/`).
-4. Save — GitHub will give you a URL like
-   `https://<your-username>.github.io/<repo-name>/`.
-5. Open that URL on your phone and (optional) add it to your home screen for
-   quick access.
+Serve the project root with any static file server over `http://localhost`.
 
-## 5. Shipping changes to the app's files
+- **Local runs use live data.** `config.js` points at the production Supabase
+  project, so saving from a local copy writes to the real exercise log.
+- **The service worker also runs locally.** It serves the app's files
+  cache-first, so edits may not appear until you unregister it or clear site
+  data in the browser's dev tools.
+
+## 5. Hosting
+
+The live site is <https://exercises-tracker.kpmv.co.uk/>, hosted on Cloudflare
+Pages from the GitHub repository `ikamen/exercises-tracker`. Response cache
+headers are set in [`_headers`](_headers).
+
+## 6. Shipping changes to the app's files
 
 [`sw.js`](sw.js) is a service worker that keeps a copy of the app's files
 (`index.html`, `styles.css`, `config.js`, `app.js`, the manifest, the icons and
@@ -78,12 +87,30 @@ launch and works offline. Exercise images are kept the first time they are
 shown. Nothing on the Supabase host is ever cached: reads, saves and the login
 always go to the network.
 
-**Whenever you change any of those files, bump `CACHE_VERSION` in `sw.js`**
-(and keep its `SUPABASE_JS` URL in step with the `<script>` tag in
-`index.html`). Without the bump, phones that already have the app keep showing
-the old copy. With it, the browser notices the changed `sw.js` on the next
-launch, downloads the new files in the background, and the launch after that
-shows the new version. Data changes need no bump.
+| Request | Strategy |
+| --- | --- |
+| Supabase host | Never cached, always network |
+| Page navigations | Cache-first, served as `index.html` |
+| `SHELL` files, supabase-js, exercise images | Cache-first |
+| `exercises/manifest.json` | Network-first, cached copy when offline |
+
+**Whenever you change any of those files, bump `CACHE_VERSION` in `sw.js`.**
+Without the bump, phones that already have the app keep showing the old copy.
+With it, the browser notices the changed `sw.js` on the next launch, downloads
+the new files in the background, and the launch after that shows the new
+version. Changes to the data in Supabase need no bump.
+
+### Files that must change together
+
+| When this changes | Also do this |
+| --- | --- |
+| Any file in `SHELL` in `sw.js`, including `index.html` (the `./` entry) | Bump `CACHE_VERSION` |
+| A new file the app needs at startup | Add it to `SHELL` |
+| An exercise image replaced under the same file name | Bump `CACHE_VERSION`, because images are cache-first once seen |
+| An exercise image added under a new file name | Regenerate the manifest |
+| supabase-js upgraded | Update the `<script>` URL and `integrity` hash in `index.html`, the `SUPABASE_JS` URL in `sw.js`, and bump `CACHE_VERSION` |
+| The Supabase project | Update `SUPABASE_URL` in `config.js` and the `preconnect` link in `index.html` |
+| A muscle group added to the tracker | Update `GROUPS` and `TABLE_ROWS` in `app.js`, add a column in `supabase/schema.sql`, add `icons/muscle-groups/<group>.svg`, and list that icon in `SHELL`. If it also needs photos, add a `.group-btn` in `index.html` |
 
 ## Project structure
 
@@ -92,23 +119,58 @@ index.html                    Page markup (both tabs)
 styles.css                    Dark theme styling
 config.js                     Supabase URL and publishable key (edit this)
 app.js                        All front-end logic
-sw.js                         Service worker: offline copy of the files above (bump CACHE_VERSION, see step 5)
+sw.js                         Service worker: offline copy of the files above (bump CACHE_VERSION, see step 6)
+_headers                      Cloudflare Pages response cache headers
 supabase/schema.sql           Run in the Supabase SQL Editor (see step 1)
 exercises/manifest.json       List of exercise images and their sizes (regenerate after adding images)
 exercises/images/             Put your exercise photos here
 tools/generate-manifest.js    Run after adding/renaming images: node tools/generate-manifest.js
 ```
 
-## How the data flows
+## Architecture
 
-- **Login:** the first visit shows a login screen. The session is remembered
-  on the device, so you stay logged in after that.
-- **Reading:** on load, the site reads every row of `exercise_days` for the
-  logged-in user. The last copy is kept on the device so the table shows
-  instantly while the fresh copy loads.
+All front-end logic is in `app.js`, a single IIFE that uses `var`, plain
+functions and promise chains with no framework. Match that style when editing
+it. `config.js` and the supabase-js UMD bundle load first as globals.
+
+### Tracker state
+
+- `state.realRows` holds the rows from the database, sorted by date.
+- `state.displayRows` is `realRows` plus a `_virtual` placeholder for today if
+  today isn't saved yet.
+- `state.draft` holds the selected date's unsaved taps, and
+  `state.originalSnapshot` is what `isDirty()` compares against. Switching
+  dates while dirty opens the confirm dialog.
+- `renderColumns` updates individual date columns and `renderTable` rebuilds
+  everything. Prefer `renderColumns` for selection changes.
+
+### Dates
+
+The app uses `"17-Sep-2026"` strings everywhere and the database uses ISO
+`"2026-09-17"`. Convert only at the boundary, in `fromDbRow` and `toDbRow`.
+Sort with `toIsoDate`, because the display format doesn't sort correctly as
+text.
+
+### How the data flows
+
+- **Login:** the first visit shows a login screen. The form takes a username
+  and signs in as `<username>@<USERNAME_EMAIL_DOMAIN>`. The session is
+  remembered on the device, so you stay logged in after that.
+- **Reading:** on load, `loadTracker` shows the rows kept in localStorage
+  instantly, then reads every row of `exercise_days` for the logged-in user.
+  `refreshRows` keeps the selection and unsaved edits during that swap, and
+  `state.savesCompleted` lets a slow read discard its result if a save finished
+  after it started.
 - **Writing:** pressing **Save** upserts the row(s) to write — usually just
   the selected date, but if there is a gap between the last saved date and the
-  one you are saving, blank rows are included for every day in between so the
-  list of dates stays continuous.
+  one you are saving, `buildSavePayload` includes blank rows for every day in
+  between so the list of dates stays continuous. Rows are never deleted from
+  the app: the database rules allow only select, insert and update.
 - **Errors:** any failure to read or write shows *"There is a problem
   connecting to the data source"* at the bottom of the screen.
+
+### Exercises tab
+
+The app never scans the images folder. It reads `exercises/manifest.json`, and
+each photo's group and label come from its file name, in the form
+`<Group> - <Exercise name>.<ext>`.
